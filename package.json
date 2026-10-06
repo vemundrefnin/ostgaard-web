@@ -1,0 +1,39 @@
+{
+  "name": "ostgaard-web",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "check": "npm run typecheck && npm run lint && npm test",
+    "check:redirects": "node scripts/check-legacy-redirects.mjs",
+    "photos": "node scripts/generate-review-photos.mjs",
+    "prebuild": "node scripts/generate-page-dates.mjs && node scripts/generate-llms-full.mjs",
+    "predev": "node scripts/generate-llms-full.mjs"
+  },
+  "dependencies": {
+    "lucide-react": "^1.18.0",
+    "next": "16.2.9",
+    "posthog-js": "^1.386.6",
+    "react": "19.2.4",
+    "react-dom": "19.2.4",
+    "shadcn": "^4.11.0"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4",
+    "@types/node": "^24",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "eslint": "^9",
+    "eslint-config-next": "16.2.9",
+    "tailwindcss": "^4",
+    "typescript": "^5",
+    "vite-tsconfig-paths": "^6.1.1",
+    "vitest": "^3.2.7"
+  }
+}

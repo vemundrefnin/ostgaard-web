@@ -1,0 +1,91 @@
+@import "tailwindcss";
+@import "shadcn/tailwind.css";
+
+/*
+ * Østgaards uttrykk: klassisk, stødig, varmt. Bare lyst tema. Aldri rent
+ * hvitt, aldri rent svart. Palett: cream / parchment / ink / moss / brass /
+ * linen. Samme tokens som kjøreplan-appen, så de to ser ut som ett merke.
+ */
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-sans-app);
+  --font-serif: var(--font-display);
+  --font-heading: var(--font-display);
+
+  --color-cream: #f6f3ec;
+  --color-parchment: #efe9dd;
+  --color-ink: #26291f;
+  --color-moss: #5a6650;
+  --color-moss-deep: #3c4634;
+  --color-brass: #a98e5b;
+  --color-linen: #dad3c4;
+
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+}
+
+:root {
+  --background: hsl(43 33% 95%); /* cream */
+  --foreground: hsl(80 12% 14%); /* ink */
+  --card: hsl(43 33% 95%);
+  --card-foreground: hsl(80 12% 14%);
+  --popover: hsl(43 33% 95%);
+  --popover-foreground: hsl(80 12% 14%);
+  --primary: hsl(95 12% 36%); /* moss */
+  --primary-foreground: hsl(43 33% 95%);
+  --secondary: hsl(42 30% 90%); /* parchment */
+  --secondary-foreground: hsl(80 12% 14%);
+  --muted: hsl(42 30% 90%);
+  --muted-foreground: hsl(80 8% 35%);
+  --accent: hsl(39 30% 51%); /* brass */
+  --accent-foreground: hsl(80 12% 14%);
+  --destructive: hsl(8 45% 38%);
+  --border: hsl(40 22% 81%); /* linen */
+  --input: hsl(40 22% 81%);
+  --ring: hsl(95 12% 36%);
+  --radius: 0rem; /* rette hjørner overalt */
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-weight: 400;
+  }
+  html {
+    @apply font-sans;
+    scroll-behavior: smooth;
+  }
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply font-serif;
+  }
+  ::selection {
+    background: var(--color-moss);
+    color: var(--color-cream);
+  }
+}
