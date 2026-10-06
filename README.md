@@ -14,6 +14,10 @@ Se [CLAUDE.md](CLAUDE.md) for hvordan innhold redigeres, og
 
 ## Lansering (når domenet skal pekes hit)
 
+0. Wix-siten må ha fått en egen adresse FØR byttet (f.eks.
+   booking.garder-ostgaard.no): billetter, gavekort og dagens skjema bor der.
+   Sett `NEXT_PUBLIC_WIX_URL` til den adressen. Da peker «Kjøp billetter»-
+   lenkene og de gamle /event-details/*- og /gift-card-stiene dit.
 1. `npm run check:redirects -- https://<production-url>.vercel.app` skal være grønn.
 2. Sett `NEXT_PUBLIC_SITE_URL=https://garder-ostgaard.no` og `SITE_INDEXABLE=true`
    for Production i Vercel, og redeploy.

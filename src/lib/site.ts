@@ -20,6 +20,12 @@ export const SITE_URL = (
  */
 export const SITE_INDEXABLE = process.env.SITE_INDEXABLE === "true";
 
+/** Adressen Wix-siten svarer på. Byttes til en subdomene ved domenebyttet. */
+export const WIX_URL = (
+  process.env.NEXT_PUBLIC_WIX_URL ?? "https://www.garder-ostgaard.no"
+).replace(/\/$/, "");
+
+
 export const SITE = {
   name: "Østgaard",
   legalName: "Østgaard Event AS",
@@ -41,12 +47,18 @@ export const SITE = {
     facebook: "https://www.facebook.com/ostgaard.event",
     linkedin: "https://no.linkedin.com/company/ostgaard-event",
   },
-  /** Booking, billetter og visning lever fortsatt på dagens system (Wix). */
+  /**
+   * Booking, billetter, gavekort og visningsskjema lever fortsatt på dagens
+   * Wix-system. Når garder-ostgaard.no pekes hit, MÅ Wix-siden få en annen
+   * adresse (f.eks. booking.garder-ostgaard.no), ellers peker disse lenkene
+   * tilbake på oss selv. Sett NEXT_PUBLIC_WIX_URL i Vercel samme dag.
+   */
   booking: {
-    base: "https://www.garder-ostgaard.no",
-    visning: "https://www.garder-ostgaard.no/contact-10",
-    arrangementer: "https://www.garder-ostgaard.no/event-list",
-    bedrift: "https://www.garder-ostgaard.no/for-bedrifter",
+    base: WIX_URL,
+    visning: `${WIX_URL}/contact-10`,
+    arrangementer: `${WIX_URL}/event-list`,
+    bedrift: `${WIX_URL}/for-bedrifter`,
+    gavekort: `${WIX_URL}/gift-card`,
   },
 } as const;
 

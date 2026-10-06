@@ -28,6 +28,21 @@ describe("legacy-redirects", () => {
     }
   });
 
+  it("kjøpsflytene på Wix følger med stien når Wix har flyttet", () => {
+    const dest = (rows: ReturnType<typeof activeRedirects>) =>
+      Object.fromEntries(rows.map((r) => [r.source, r.destination]));
+    const before = dest(activeRedirects("https://www.garder-ostgaard.no"));
+    expect(before["/event-details/:slug*"]).toBe("/#arrangementer");
+
+    const after = dest(activeRedirects("https://booking.garder-ostgaard.no/"));
+    expect(after["/event-details/:slug*"]).toBe(
+      "https://booking.garder-ostgaard.no/event-details/:slug*"
+    );
+    expect(after["/gift-card"]).toBe("https://booking.garder-ostgaard.no/gift-card");
+    // Visningsskjemaet skal bo her, ikke på Wix.
+    expect(after["/contact-10"]).toBe("/#kontakt");
+  });
+
   it("alle rader er permanente", () => {
     for (const r of LEGACY_REDIRECTS) expect(r.permanent).toBe(true);
   });
