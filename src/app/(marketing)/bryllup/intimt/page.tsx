@@ -17,7 +17,6 @@ export const metadata: Metadata = {
     "Lite bryllup med stor ramme: vielse ved dammen og middag i historiske lokaler for 20–45 gjester, med samme kjøkken og vertskap som på de store bryllupene.",
 };
 
-const WIX = "https://www.garder-ostgaard.no";
 
 const REASONS = [
   {
@@ -94,7 +93,7 @@ export default function IntimtPage() {
           </p>
           <div className="mt-7 flex flex-wrap gap-3">
             <a
-              href={`${WIX}/contact-10`}
+              href="/visning"
               className="inline-flex items-center gap-2 border border-primary bg-primary px-6 py-3 text-xs tracking-[0.2em] uppercase text-primary-foreground transition-colors hover:bg-primary/90"
             >
               Book gratis visning <ArrowRight className="size-3.5" />

@@ -1,34 +1,37 @@
 "use client";
 
 import { useEffect } from "react";
+import { getPostHog, track } from "@/lib/posthog";
 
 /**
- * PostHog (EU), lastet først etter at siden er interaktiv og bare når en
- * nøkkel finnes. Går via /ingest (rewrite i next.config.ts), så kallene er
- * førstepartskall til vårt eget domene. Uten NEXT_PUBLIC_POSTHOG_KEY lastes
- * ikke en eneste byte analytics-kode.
+ * Starter PostHog etter at siden er interaktiv, og lytter på klikk i hele
+ * dokumentet, så CTA-er, telefon, e-post og billettlenker måles uten at
+ * hver knapp må instrumenteres for hånd. Hvilken knapp som ble klikket
+ * leses fra data-cta, href og teksten på elementet.
  */
-const KEY = process.env.NEXT_PUBLIC_POSTHOG_KEY;
-
 export function Analytics() {
   useEffect(() => {
-    if (!KEY) return;
-    let cancelled = false;
-    import("posthog-js").then(({ default: posthog }) => {
-      if (cancelled) return;
-      posthog.init(KEY, {
-        api_host: "/ingest",
-        ui_host: "https://eu.posthog.com",
-        defaults: "2025-05-24",
-        capture_pageview: "history_change",
-        capture_exceptions: true,
-        persistence: "memory",
-      });
-      posthog.register({ site: "garder-ostgaard.no" });
-    });
-    return () => {
-      cancelled = true;
+    void getPostHog();
+
+    const onClick = (e: MouseEvent) => {
+      const el = (e.target as HTMLElement | null)?.closest<HTMLAnchorElement | HTMLButtonElement>(
+        "a, button"
+      );
+      if (!el) return;
+      const href = el instanceof HTMLAnchorElement ? el.href : "";
+      const label = (el.dataset.cta ?? el.textContent ?? "").trim().slice(0, 80);
+      const props = { label, href, page: window.location.pathname };
+
+      if (href.startsWith("tel:") || href.startsWith("mailto:")) {
+        track("contact_click", { ...props, channel: href.startsWith("tel:") ? "telefon" : "epost" });
+      } else if (/event-details|event-list|billett/i.test(href + label)) {
+        track("ticket_click", props);
+      } else if (el.dataset.cta || /visning|forespørsel|book/i.test(label)) {
+        track("cta_click", props);
+      }
     };
+    document.addEventListener("click", onClick, { capture: true });
+    return () => document.removeEventListener("click", onClick, { capture: true });
   }, []);
   return null;
 }

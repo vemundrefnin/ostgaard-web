@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Image from "next/image";
+import { SITE } from "@/lib/site";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 
@@ -15,7 +16,7 @@ export const metadata: Metadata = {
     "Bryllup omgitt av natur, historie og tidløs eleganse på Østgaard i Halden. Utevielse ved dammen, historiske lokaler og bryllupspakker med alt inkludert.",
 };
 
-const WIX = "https://www.garder-ostgaard.no";
+const WIX = SITE.booking.base;
 
 const PATHS = [
   {
@@ -139,7 +140,7 @@ export default function BryllupPage() {
           </p>
           <div className="mt-7 flex flex-wrap gap-3">
             <a
-              href={`${WIX}/contact-10`}
+              href="/visning"
               className="inline-flex items-center gap-2 border border-primary bg-primary px-6 py-3 text-xs tracking-[0.2em] uppercase text-primary-foreground transition-colors hover:bg-primary/90"
             >
               Book gratis visning <ArrowRight className="size-3.5" />

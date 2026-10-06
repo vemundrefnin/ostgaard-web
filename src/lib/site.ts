@@ -88,6 +88,15 @@ export const PAGES: SitePage[] = [
     section: "Hovedsider",
   },
   {
+    path: "/visning",
+    title: "Book visning på Østgaard",
+    description:
+      "Kom og se lokalene, hagen og vielsesplassen. Uforpliktende og kostnadsfri visning, svar innen én virkedag.",
+    changeFrequency: "yearly",
+    priority: 0.9,
+    section: "Hovedsider",
+  },
+  {
     path: "/lokaler",
     title: "Lokaler på Østgaard",
     description:

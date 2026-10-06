@@ -18,7 +18,6 @@ export const metadata: Metadata = {
     "Bli viet i paviljongen ved dammen på Østgaard, og få festen samme sted. Praktisk guide til utendørs vielse: prøvingsattest, valg av vigsler og plan B for vær.",
 };
 
-const WIX = "https://www.garder-ostgaard.no";
 
 const FACTS = [
   { label: "Sted", value: "Paviljongen i parken, med dammen som bakteppe" },
@@ -102,7 +101,7 @@ export default function UtevielsePage() {
           </ul>
           <div className="mt-7 flex flex-wrap gap-3">
             <a
-              href={`${WIX}/contact-10`}
+              href="/visning"
               className="inline-flex items-center gap-2 border border-primary bg-primary px-6 py-3 text-xs tracking-[0.2em] uppercase text-primary-foreground transition-colors hover:bg-primary/90"
             >
               Book en visning <ArrowRight className="size-3.5" />

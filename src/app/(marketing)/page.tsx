@@ -1,7 +1,9 @@
 import Image from "next/image";
+import { SITE } from "@/lib/site";
 import { ArrowRight } from "lucide-react";
 import { HeroVideo } from "@/components/landing/hero-video";
 import { occasionsForSeason, seasonBand } from "@/lib/landing/season";
+import { formatEventDate, upcomingEvents } from "@/lib/wix-events";
 
 /**
  * Ny forside — innhold portert fra dagens garder-ostgaard.no (Østgaards eget
@@ -10,7 +12,7 @@ import { occasionsForSeason, seasonBand } from "@/lib/landing/season";
  * skal ikke erstatte de flytene.
  */
 
-const WIX = "https://www.garder-ostgaard.no";
+const WIX = SITE.booking.base;
 
 /** Sesongbåndet leses per time, så månedsskiftet slår inn av seg selv. */
 export const revalidate = 3600;
@@ -54,32 +56,6 @@ const REVIEWS = [
   },
 ];
 
-/**
- * Kommende arrangementer — billettsalget skjer i det eksisterende systemet,
- * så hvert kort lenker rett dit. Oppdateres manuelt til arrangementene får en
- * egen kilde.
- */
-const EVENTS = [
-  {
-    title: "HNU Sommerfest på Østgaard",
-    date: "Torsdag 27. august",
-    href: `${WIX}/event-details/hnu-sommerfest-pa-ostgaard`,
-    cta: "Kjøp billetter",
-  },
-  {
-    title: "Bobler og Blomster",
-    date: "Fredag 4. september",
-    href: `${WIX}/event-details/bobler-og-blomster`,
-    cta: "Kjøp billetter",
-  },
-  {
-    title: "Motsetninger med Trygve Skaug & Birdie Fuglehaug",
-    date: "Fredag 16. oktober",
-    href: `${WIX}/event-details/motsetninger-med-trygve-skaug-birdie-fuglehaug`,
-    cta: "Svar på invitasjon",
-  },
-];
-
 /** Tre steg fra første besøk til bryllupsdag — planen gjester møter oss med. */
 const PLAN = [
   {
@@ -111,7 +87,9 @@ function Eyebrow({ children }: { children: React.ReactNode }) {
   );
 }
 
-export default function LandingPage() {
+export default async function LandingPage() {
+  // Fra Wix Events (eller src/content/events.json uten API-nøkkel).
+  const events = await upcomingEvents(4);
   const band = seasonBand();
   const occasions = occasionsForSeason();
 
@@ -134,7 +112,7 @@ export default function LandingPage() {
           </p>
           <div className="mt-7 flex flex-wrap gap-3">
             <a
-              href={`${WIX}/contact-10`}
+              href="/visning"
               className="inline-flex items-center gap-2 border border-white bg-white px-6 py-3 text-xs tracking-[0.2em] uppercase text-foreground transition-colors hover:bg-white/90"
             >
               Book gratis visning <ArrowRight className="size-3.5" />
@@ -245,7 +223,7 @@ export default function LandingPage() {
               ))}
             </ol>
             <a
-              href={`${WIX}/contact-10`}
+              href="/visning"
               className="mt-9 inline-flex items-center gap-2 border border-primary bg-primary px-6 py-3 text-xs tracking-[0.2em] uppercase text-primary-foreground transition-colors hover:bg-primary/90"
             >
               Book gratis visning <ArrowRight className="size-3.5" />
@@ -287,7 +265,7 @@ export default function LandingPage() {
               </p>
             </div>
             <a
-              href={`${WIX}/contact-10`}
+              href="/visning"
               className="mt-7 inline-flex items-center gap-2 border border-primary bg-primary px-6 py-3 text-xs tracking-[0.2em] uppercase text-primary-foreground transition-colors hover:bg-primary/90"
             >
               Book visning <ArrowRight className="size-3.5" />
@@ -366,16 +344,16 @@ export default function LandingPage() {
           </div>
           <div className="mt-10 flex flex-wrap gap-3">
             <a
-              href={`${WIX}/contact-10`}
+              href="/visning"
               className="inline-flex items-center gap-2 border border-primary bg-primary px-6 py-3 text-xs tracking-[0.2em] uppercase text-primary-foreground transition-colors hover:bg-primary/90"
             >
               Send oss en forespørsel <ArrowRight className="size-3.5" />
             </a>
             <a
-              href={`${WIX}/for-bedrifter`}
+              href="/visning?type=SOMMERFEST"
               className="inline-flex items-center border border-primary px-6 py-3 text-xs tracking-[0.2em] uppercase text-primary transition-colors hover:bg-primary hover:text-primary-foreground"
             >
-              Se bedriftspakkene
+              Spør om bedriftsarrangement
             </a>
           </div>
         </div>
@@ -388,27 +366,32 @@ export default function LandingPage() {
           <h2 className="mt-2 font-serif text-3xl font-medium sm:text-4xl">
             Det skjer på Østgaard
           </h2>
-          <div className="mt-10 divide-y border-y">
-            {EVENTS.map((e) => (
-              <div
-                key={e.title}
-                className="flex flex-wrap items-center justify-between gap-3 py-5"
-              >
-                <div>
-                  <p className="font-serif text-lg">{e.title}</p>
-                  <p className="text-sm text-muted-foreground">
-                    {e.date} · Halden
-                  </p>
+          {events.length > 0 ? (
+            <div className="mt-10 divide-y border-y">
+              {events.map((e) => (
+                <div key={e.href + e.start} className="flex flex-wrap items-center justify-between gap-3 py-5">
+                  <div>
+                    <p className="font-serif text-lg">{e.title}</p>
+                    <p className="text-sm text-muted-foreground">
+                      {formatEventDate(e.start)}
+                      {e.location ? ` · ${e.location}` : ""}
+                    </p>
+                  </div>
+                  <a
+                    href={e.href}
+                    className="inline-flex items-center border border-primary px-4 py-2 text-xs tracking-[0.18em] uppercase text-primary transition-colors hover:bg-primary hover:text-primary-foreground"
+                  >
+                    {e.action}
+                  </a>
                 </div>
-                <a
-                  href={e.href}
-                  className="inline-flex items-center border border-primary px-4 py-2 text-xs tracking-[0.18em] uppercase text-primary transition-colors hover:bg-primary hover:text-primary-foreground"
-                >
-                  {e.cta}
-                </a>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
+          ) : (
+            <p className="mt-6 text-muted-foreground">
+              Ingen arrangementer er lagt ut akkurat nå. Følg oss på Instagram, så får du beskjed
+              når neste er klart.
+            </p>
+          )}
           <a
             href={`${WIX}/event-list`}
             className="mt-6 inline-flex items-center gap-1.5 text-xs tracking-[0.18em] uppercase text-primary hover:underline"
@@ -524,7 +507,7 @@ export default function LandingPage() {
             hoteller i Halden, og med taxi og buss.
           </p>
           <a
-            href={`${WIX}/contact-10`}
+            href="/visning"
             className="mt-5 inline-flex items-center gap-1.5 text-xs tracking-[0.18em] uppercase text-primary hover:underline"
           >
             Spør om overnatting <ArrowRight className="size-3" />
@@ -543,7 +526,7 @@ export default function LandingPage() {
             neste prosjekt, enten det er TV-serie, film, reklame eller fotoopptak.
           </p>
           <a
-            href={`${WIX}/contact-10`}
+            href="/visning"
             className="mt-5 inline-flex items-center gap-1.5 text-xs tracking-[0.18em] uppercase text-primary hover:underline"
           >
             Ta kontakt om produksjon <ArrowRight className="size-3" />
@@ -571,7 +554,7 @@ export default function LandingPage() {
               lokalene, uteområdene og mulighetene for akkurat deres dag.
             </p>
             <a
-              href={`${WIX}/contact-10`}
+              href="/visning"
               className="mt-7 inline-flex items-center gap-2 border border-white bg-white px-7 py-3 text-xs tracking-[0.2em] uppercase text-foreground transition-colors hover:bg-white/90"
             >
               Book visning <ArrowRight className="size-3.5" />

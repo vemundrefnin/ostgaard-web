@@ -21,7 +21,6 @@ export const metadata: Metadata = {
     "Prisen på et bryllup på Østgaard avhenger av antall gjester, meny, drikke og baroppsett. Vi går gjennom hele regnestykket med dere på en kostnadsfri visning, på gården eller digitalt.",
 };
 
-const WIX = "https://www.garder-ostgaard.no";
 
 /** Det som faktisk flytter prisen. Uten tall — se filkommentaren. */
 const DRIVERS = [
@@ -157,7 +156,7 @@ export default function PrisPage() {
               par bestemmer seg først etter å ha stått i rommet.
             </p>
             <a
-              href={`${WIX}/contact-10`}
+              href="/visning"
               className="mt-6 inline-flex w-fit items-center gap-2 border border-primary bg-primary px-6 py-3 text-xs tracking-[0.2em] uppercase text-primary-foreground transition-colors hover:bg-primary/90"
             >
               Book visning på gården <ArrowRight className="size-3.5" />
@@ -175,7 +174,7 @@ export default function PrisPage() {
               besøk når det passer bedre.
             </p>
             <a
-              href={`${WIX}/contact-10`}
+              href="/visning"
               className="mt-6 inline-flex w-fit items-center gap-2 border border-primary px-6 py-3 text-xs tracking-[0.2em] uppercase text-primary transition-colors hover:bg-primary hover:text-primary-foreground"
             >
               Be om digital visning <ArrowRight className="size-3.5" />
