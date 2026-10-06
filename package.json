@@ -12,7 +12,6 @@
     "test:watch": "vitest",
     "check": "npm run typecheck && npm run lint && npm test",
     "check:redirects": "node scripts/check-legacy-redirects.mjs",
-    "photos": "node scripts/generate-review-photos.mjs",
     "prebuild": "node scripts/generate-page-dates.mjs && node scripts/generate-llms-full.mjs",
     "predev": "node scripts/generate-llms-full.mjs"
   },

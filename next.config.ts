@@ -34,6 +34,17 @@ const nextConfig: NextConfig = {
   },
   async headers() {
     return [
+      // Til SITE_INDEXABLE=true: noindex som HTTP-header på ALT, også bilder,
+      // og.jpg, llms.txt og sitemap.xml som ikke kan bære en <meta robots>.
+      // robots.txt og <meta> sier det samme; dette er beltet til bukseselen.
+      ...(process.env.SITE_INDEXABLE === "true"
+        ? []
+        : [
+            {
+              source: "/:path*",
+              headers: [{ key: "X-Robots-Tag", value: "noindex, nofollow" }],
+            },
+          ]),
       {
         // Bilder og video endrer seg sjelden og får nytt innhold ved deploy.
         // Lang CDN-cache, kort nettleser-cache, så et byttet bilde vises innen

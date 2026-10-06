@@ -10,6 +10,31 @@ billettsalg og visning skjer i det eksisterende systemet på
 www.garder-ostgaard.no og lenkes ut herfra. Denne siden skal ikke erstatte de
 flytene.
 
+## Repoet er OFFENTLIG. Alt du committer kan hele verden lese.
+
+Repoet er offentlig på GitHub, så git-historikken kan ikke renses i ettertid.
+Før hver commit: hadde dette tålt å stå på forsiden av en avis?
+
+Dette skal aldri inn i repoet:
+
+- Nøkler, passord, tokens, `.env`-filer. Konfigurasjon ligger i Vercel, og
+  `.env.example` er den eneste env-filen som sjekkes inn (uten verdier).
+- Personopplysninger om kunder, brudepar eller gjester: navn, e-post, telefon,
+  datoer for konkrete bryllup, kontrakter, fakturaer, allergier.
+- Bilder av gjester eller par uten at de har sagt ja til publisering.
+- Fotografers bilder uten avtale. Bruk på nettsiden krever avtale og
+  kreditering, og et offentlig repo ER publisering.
+- Interne tall: regnskap, lønn, kontrakter med leverandører, uferdige
+  pristanker. Prisene som allerede står på nettsiden er greie.
+- Utkast og vurderingsmateriale som ikke skal ut. Legg det et annet sted,
+  ikke i en branch her.
+
+Det som er greit: alt som allerede står på nettsiden, Østgaards egne
+kontaktopplysninger (`src/lib/site.ts`), og bilder Østgaard eier eller har
+avtale om.
+
+Er du i tvil, ikke commit. Spør Vemund eller Kirstine først.
+
 ## Slik jobber du her
 
 Den som redigerer er ofte ikke utvikler. Gjør det enkelt:
@@ -84,7 +109,7 @@ Adresser lever i e-poster, bokmerker, QR-koder og Googles indeks.
 - Alle sider er statiske og serveres fra Vercels CDN. Forsiden regenereres
   hver time fordi sesongbåndet avhenger av dato (`revalidate = 3600`).
   Unngå `fetch`, databaser og dynamiske API-er i sidene. Da mister vi det.
-- `robots.txt` og `<meta robots>` sier noindex til `SITE_INDEXABLE=true` er
+- `robots.txt`, `<meta robots>` og HTTP-headeren `X-Robots-Tag` sier noindex til `SITE_INDEXABLE=true` er
   satt i Vercel Production. Det skjer den dagen garder-ostgaard.no pekes hit.
   Preview-deploys er alltid noindex.
 - `llms.txt` bygges fra `PAGES`. `llms-full.txt` (all tekst fra alle sider)

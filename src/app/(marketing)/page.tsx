@@ -2,7 +2,6 @@ import Image from "next/image";
 import { ArrowRight } from "lucide-react";
 import { HeroVideo } from "@/components/landing/hero-video";
 import { occasionsForSeason, seasonBand } from "@/lib/landing/season";
-import { MediaReview } from "@/components/landing/media-review";
 
 /**
  * Ny forside — innhold portert fra dagens garder-ostgaard.no (Østgaards eget
@@ -581,9 +580,6 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* UTKAST: medievurdering — kandidatvideoer/-bilder. Fjernes før
-          lansering; se media-review.tsx. */}
-      <MediaReview />
     </main>
   );
 }
