@@ -14,7 +14,6 @@ export const metadata: Metadata = {
     "Velg ett eller flere av lokalene på Østgaard: historiske Gildehallen (130 gjester), lyse Låvetoppen (150 gjester) og intime Herredstyresalen. Book en kostnadsfri visning.",
 };
 
-const WIX = "https://www.garder-ostgaard.no";
 
 const VENUES = [
   {
@@ -106,7 +105,7 @@ export default function LokalerPage() {
                 </div>
               </dl>
               <a
-                href={`${WIX}/contact-10`}
+                href="/visning"
                 className="mt-6 inline-flex items-center gap-2 border border-primary bg-primary px-6 py-3 text-xs tracking-[0.2em] uppercase text-primary-foreground transition-colors hover:bg-primary/90"
               >
                 Book en visning <ArrowRight className="size-3.5" />

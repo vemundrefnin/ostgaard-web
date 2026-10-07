@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import Link from "next/link";
+import { SiteNav } from "@/components/site-nav";
 import { SITE } from "@/lib/site";
 
 /**
@@ -11,42 +12,10 @@ import { SITE } from "@/lib/site";
  * /info/* har sin egen, enklere ramme (src/app/info/layout.tsx).
  */
 
-const NAV = [
-  { label: "Bryllup", href: "/#bryllup" },
-  { label: "Om Østgaard", href: "/#om" },
-  { label: "Feiringer", href: "/#feiringer" },
-  { label: "Arrangementer", href: "/#arrangementer" },
-  { label: "Gårdsbutikken", href: "/#fru-ostgaard" },
-  { label: "Kontakt", href: "/#kontakt" },
-];
-
 export default function MarketingLayout({ children }: { children: ReactNode }) {
   return (
-    <div className="min-h-screen bg-background text-foreground">
-      <header className="sticky top-0 z-40 border-b bg-background/90 backdrop-blur">
-        <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3">
-          <Link href="/" className="font-serif text-lg tracking-[0.35em] uppercase">
-            Østgaard
-          </Link>
-          <nav className="hidden items-center gap-6 md:flex">
-            {NAV.map((item) => (
-              <a
-                key={item.href}
-                href={item.href}
-                className="text-xs tracking-[0.18em] uppercase text-muted-foreground transition-colors hover:text-foreground"
-              >
-                {item.label}
-              </a>
-            ))}
-          </nav>
-          <a
-            href={SITE.booking.visning}
-            className="inline-flex items-center border border-primary bg-primary px-4 py-2 text-xs font-normal tracking-[0.2em] uppercase text-primary-foreground transition-colors hover:bg-primary/90"
-          >
-            Book visning
-          </a>
-        </div>
-      </header>
+    <div className="min-h-screen bg-background pb-16 text-foreground sm:pb-0">
+      <SiteNav />
 
       {children}
 
@@ -88,7 +57,7 @@ export default function MarketingLayout({ children }: { children: ReactNode }) {
             <p className="text-xs tracking-[0.2em] uppercase text-muted-foreground">Snarveier</p>
             <ul className="mt-3 space-y-1.5 text-sm">
               <li>
-                <a href={SITE.booking.visning} className="hover:underline">
+                <a href="/visning" className="hover:underline">
                   Book visning
                 </a>
               </li>

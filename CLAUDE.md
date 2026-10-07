@@ -61,6 +61,9 @@ Den som redigerer er ofte ikke utvikler. Gjør det enkelt:
 | Bilder og video | `public/images/landing/` og `public/images/info/` |
 | Kontaktinfo, adresse, sosiale medier, booking-lenker | `src/lib/site.ts` (`SITE`) |
 | Liste over alle sider (gir sitemap og llms.txt) | `src/lib/site.ts` (`PAGES`) |
+| Visningsskjemaet | `src/components/visning-form.tsx`, siden `/visning`, sendes via `src/app/api/visning/route.ts` til kjøreplan-appen |
+| Meny og klebrig mobil-CTA | `src/components/site-nav.tsx` |
+| Kommende arrangementer | Hentes fra Wix Events (`src/lib/wix-events.ts`); uten API-nøkkel brukes `src/content/events.json` |
 | Gamle adresser som må fortsette å fungere | `src/lib/legacy-redirects.ts` |
 | Farger og fonter | `src/app/globals.css` |
 
@@ -103,6 +106,23 @@ Adresser lever i e-poster, bokmerker, QR-koder og Googles indeks.
   moss, brass og linen og ligger i `globals.css`.
 - Priser står i `src/app/(marketing)/bryllup/pris/page.tsx`. Endrer du dem,
   sjekk at tallene stemmer med det kjøreplan-appen bruker.
+
+## Arrangementer
+
+Billetter selges i Wix (billettsystem med app og innsjekk) og skal fortsette
+der. Forsiden leser listen over kommende arrangementer fra Wix Events hver
+time når `WIX_API_KEY` og `WIX_SITE_ID` er satt. Er de ikke satt, vises
+`src/content/events.json`: legg inn tittel, `start` (ISO-dato med tidssone),
+`href` (lenken til arrangementet i Wix) og `action`. Passerte datoer skjules
+automatisk, så det er aldri farlig å la gamle rader ligge.
+
+## Måling
+
+PostHog (samme prosjekt som kjøreplan-appen) måler automatisk: sidevisninger,
+`cta_click` (knapper med «visning», «book», «forespørsel» eller `data-cta`),
+`contact_click` (telefon og e-post), `ticket_click`, og skjemaet sender
+`inquiry_started`, `inquiry_submitted`, `inquiry_failed`. Legg `data-cta="…"`
+på nye knapper som skal telles som konvertering.
 
 ## Teknisk
 

@@ -16,6 +16,8 @@
  *    besøker hver gammel sti og feiler på 404.
  *  - Kilder med æøå må stå URL-enkodet, Next matcher den enkodede stien.
  */
+import { WIX_URL } from "./site";
+
 export interface Redirect {
   source: string;
   destination: string;
@@ -70,7 +72,22 @@ export const LEGACY_REDIRECTS: Redirect[] = [
   { source: "/landing/:path*", destination: "/:path*", permanent: true },
 ];
 
+/**
+ * Stier som er kjøpsflyter på Wix (billetter, gavekort, booking). Når Wix
+ * har fått egen adresse (NEXT_PUBLIC_WIX_URL), sendes de dit med stien
+ * intakt, så en billettlenke i en e-post fortsatt virker etter domenebyttet.
+ * Visningsskjemaet (/contact-10) følger ikke med: det skal bo her.
+ */
+const WIX_FLOWS = ["/event-list", "/event-details/:slug*", "/gift-card", "/book-online"];
+
+const WIX_ORIGINAL = "https://www.garder-ostgaard.no";
+
 /** Radene Next faktisk skal sette opp: alt som ikke peker på seg selv. */
-export function activeRedirects(): Redirect[] {
-  return LEGACY_REDIRECTS.filter((r) => r.source !== r.destination);
+export function activeRedirects(wixUrl: string = WIX_URL): Redirect[] {
+  const wixMoved = wixUrl.replace(/\/$/, "") !== WIX_ORIGINAL;
+  return LEGACY_REDIRECTS.filter((r) => r.source !== r.destination).map((r) =>
+    wixMoved && WIX_FLOWS.includes(r.source)
+      ? { ...r, destination: `${wixUrl.replace(/\/$/, "")}${r.source}` }
+      : r
+  );
 }
