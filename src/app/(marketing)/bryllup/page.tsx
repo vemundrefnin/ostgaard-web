@@ -37,7 +37,7 @@ const PATHS = [
   },
   {
     title: "Hva koster det?",
-    text: "Prisen avhenger av gjester, meny, drikke og bar. Se hva som avgjør, og hvordan dere får et konkret tall.",
+    text: "Fra 2 125 kr per person, med lokalet inkludert. Se alle prisene og et regneeksempel.",
     href: "/bryllup/pris",
     external: false,
     image: "/images/landing/gildehallen-2.jpg",

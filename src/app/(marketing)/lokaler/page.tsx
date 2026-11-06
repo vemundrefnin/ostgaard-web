@@ -9,12 +9,12 @@ import { ArrowRight } from "lucide-react";
  */
 
 export const metadata: Metadata = {
-  title: "Lokaler på Østgaard | Gildehallen, Låvetoppen og Herredstyresalen",
+  title: "Lokaler på Østgaard | Gildehallen, Låvetoppen og Kurommet",
   description:
     "Velg lokalet som passer dagen deres på Østgaard: historiske Gildehallen (130 gjester), lyse Låvetoppen (150 gjester), Kurommet (80 gjester) og Fru Østgaard. Book en kostnadsfri visning.",
 };
 
-/** Festlokalene holder åpent til 02:00. Bilde mangler der vi ikke har et ekte. */
+/** Festlokalene holder åpent til 02:00. */
 const VENUES: {
   name: string;
   capacity: string;
@@ -39,8 +39,8 @@ const VENUES: {
     text: "Gårdens største og lyseste sal, laget for store fester, dans og lange sommerkvelder. Fast prosjektor og lerret er på plass. Solvesthagen hører til.",
     outdoor: "Solvesthagen",
     closes: "02:00",
-    image: null,
-    alt: "",
+    image: "/images/landing/lavetoppen.jpg",
+    alt: "Låvetoppen dekket til fest med lysekroner og hvite stoffer under takbjelkene",
   },
   {
     name: "Kurommet",
@@ -48,8 +48,8 @@ const VENUES: {
     text: "Mellomstort lokale for konfirmasjon, jubileum, minnestund og kurs.",
     outdoor: null,
     closes: null,
-    image: null,
-    alt: "",
+    image: "/images/landing/kurommet.jpg",
+    alt: "Kurommet satt opp til kurs med langbord og hvite steinvegger",
   },
   {
     name: "Fru Østgaard",

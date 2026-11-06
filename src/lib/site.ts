@@ -119,7 +119,7 @@ export const PAGES: SitePage[] = [
     path: "/bryllup/pris",
     title: "Hva koster et bryllup på Østgaard?",
     description:
-      "Slik settes prisen: lokale, mat og drikke, og hva som er inkludert.",
+      "Priser på bryllup: kuvertpris per meny, tillegg, regneeksempel og hva som er inkludert.",
     changeFrequency: "monthly",
     priority: 0.8,
     section: "Bryllup",
