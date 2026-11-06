@@ -315,9 +315,30 @@ export default async function LandingPage() {
         </div>
       </section>
 
-      {/* Feiringer, selskap og bedrift — halve omsetningen, egen plass */}
-      <section id="feiringer" className="scroll-mt-20 border-t">
+      {/* Overnatting: hotellavtalen er det vi lover. Plassene på gården er ikke
+          noe vi selger inn på nettsiden. */}
+      <section id="overnatting" className="scroll-mt-20 border-t">
         <div className="mx-auto max-w-6xl px-4 py-20">
+          <Eyebrow>Overnatting</Eyebrow>
+          <h2 className="mt-2 max-w-2xl font-serif text-3xl font-medium sm:text-4xl">
+            Hotell og transport for gjestene
+          </h2>
+          <p className="mt-3 max-w-2xl text-sm leading-relaxed text-muted-foreground">
+            Vi har avtale med Home Hotel Park i Halden, fem minutter unna, og
+            hjelper dere med booking og transport begge veier.
+          </p>
+          <a
+            href="/visning"
+            className="mt-5 inline-flex items-center gap-1.5 text-xs tracking-[0.18em] uppercase text-primary hover:underline"
+          >
+            Spør om overnatting <ArrowRight className="size-3" />
+          </a>
+        </div>
+      </section>
+
+      {/* Feiringer, selskap og bedrift. Bryllup er fokus, disse får en kort inngang. */}
+      <section id="feiringer" className="scroll-mt-20 border-t">
+        <div id="bedrifter" className="mx-auto max-w-6xl scroll-mt-20 px-4 py-20">
           <Eyebrow>Hele året på Østgaard</Eyebrow>
           <h2 className="mt-2 max-w-2xl font-serif text-3xl font-medium sm:text-4xl">
             Det er ikke bare bryllup vi feirer
@@ -401,136 +422,57 @@ export default async function LandingPage() {
         </div>
       </section>
 
-      {/* Utstillinger */}
-      <section
-        id="utstillinger"
-        className="mx-auto grid max-w-6xl scroll-mt-20 gap-10 px-4 py-20 lg:grid-cols-2"
-      >
-        <div className="relative aspect-[16/10] overflow-hidden border lg:aspect-auto">
-          <Image
-            src="/images/landing/galleri.jpg"
-            alt="Kunstutstilling på steinveggene i Gildehallen"
-            fill
-            className="object-cover"
-            sizes="(min-width: 1024px) 50vw, 100vw"
-          />
-        </div>
-        <div>
-          <Eyebrow>Utstillinger</Eyebrow>
-          <h2 className="mt-2 font-serif text-3xl font-medium sm:text-4xl">
-            Lille Martine på Østgaard
-          </h2>
-          <div className="mt-5 space-y-4 text-sm leading-relaxed text-muted-foreground">
-            <p>
-              På Østgaard ønsker vi velkommen til unike kunstopplevelser i
-              Gildehallen, i samarbeid med Galleri Lille Martine. Flere ganger
-              i året fylles hallen med spennende separatutstillinger fra både
-              etablerte og nye kunstnere som du ikke vil gå glipp av.
-            </p>
-            <p>
-              Utstillingene har allerede rukket å bli populære møteplasser for
-              kunstinteresserte, og kombinasjonen av historiske lokaler, sterke
-              kunstuttrykk og et rikt gårdsliv gjør besøket til noe helt
-              spesielt. Når du besøker utstillingene, kan du også ta turen
-              innom Fru Østgaard kafé, som holder åpent disse dagene. Lunsj,
-              kaffe og hjemmebakte kaker er en perfekt avrunding på
-              kunstopplevelsen.
-            </p>
-          </div>
-          <a
-            href="https://www.gallerilillemartine.no/utstillinger"
-            className="mt-6 inline-flex items-center gap-1.5 text-xs tracking-[0.18em] uppercase text-primary hover:underline"
-          >
-            Se utstillingsprogrammet <ArrowRight className="size-3" />
-          </a>
-        </div>
-      </section>
-
-      {/* Fru Østgaard */}
-      <section id="fru-ostgaard" className="scroll-mt-20 border-y bg-secondary/40">
-        <div className="mx-auto grid max-w-6xl gap-10 px-4 py-20 lg:grid-cols-2">
-          <div className="order-2 lg:order-1">
-            <Eyebrow>Fru Østgaard</Eyebrow>
-            <h2 className="mt-2 font-serif text-3xl font-medium sm:text-4xl">
-              Vårt lille spiskammer
-            </h2>
-            <div className="mt-5 space-y-4 text-sm leading-relaxed text-muted-foreground">
-              <p>
-                Å starte Fru Østgaard har alltid vært en drøm for Nina, og
-                navnet er en hyllest til alle kvinnene som har bodd og virket
-                på gården gjennom generasjonene.
-              </p>
-              <p>
-                Afternoon Tea, en stor favoritt, kan bookes via nettsiden
-                eller på e-post. For grupper på 15 personer eller flere kan vi
-                også tilby Afternoon Tea på forhåndsbestilling.
-              </p>
-              <p>
-                Butikken bugner av unike, egenproduserte varer, laget med
-                kjærlighet og råvarer fra egen gård eller nærområdet. Fru
-                Østgaard kan også bookes til ulike arrangement. Hva med en
-                Afternoon Tea-bursdag, eller en Paint and sip-bursdag?
-              </p>
-            </div>
-            <a
-              href={`${WIX}/event-list`}
-              className="mt-6 inline-flex items-center gap-2 border border-primary bg-primary px-6 py-3 text-xs tracking-[0.2em] uppercase text-primary-foreground transition-colors hover:bg-primary/90"
-            >
-              Book Afternoon Tea <ArrowRight className="size-3.5" />
-            </a>
-          </div>
-          <div className="relative order-1 aspect-[4/5] overflow-hidden border lg:order-2 lg:aspect-auto">
+      {/* Også på Østgaard: korte innganger. Ankrene brukes av gamle adresser. */}
+      <section className="mx-auto grid max-w-6xl gap-6 px-4 py-20 md:grid-cols-2">
+        <div id="fru-ostgaard" className="scroll-mt-20 border bg-card">
+          <div className="relative aspect-[16/10] overflow-hidden">
             <Image
               src="/images/landing/fru-ostgaard.jpg"
               alt="Egenproduserte varer i butikken hos Fru Østgaard"
               fill
               className="object-cover"
-              sizes="(min-width: 1024px) 50vw, 100vw"
+              sizes="(min-width: 768px) 50vw, 100vw"
             />
           </div>
+          <div className="p-8">
+            <Eyebrow>Fru Østgaard</Eyebrow>
+            <h2 className="mt-2 font-serif text-2xl font-medium">Afternoon tea og gårdsbutikk</h2>
+            <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
+              Afternoon tea og egenproduserte varer fra gården og nærområdet.
+              Grupper på 15 eller flere kan bestille afternoon tea på forhånd.
+            </p>
+            <a
+              href={`${WIX}/event-list`}
+              className="mt-5 inline-flex items-center gap-1.5 text-xs tracking-[0.18em] uppercase text-primary hover:underline"
+            >
+              Book afternoon tea <ArrowRight className="size-3" />
+            </a>
+          </div>
         </div>
-      </section>
-
-      {/* TV/film — nisje, men tv2.no sender ekte trafikk hit */}
-      <section
-        id="bedrifter"
-        className="mx-auto grid max-w-6xl scroll-mt-20 gap-6 px-4 py-20 md:grid-cols-2"
-      >
-        <div className="border bg-card p-8">
-          <Eyebrow>Overnatting</Eyebrow>
-          <h2 className="mt-2 font-serif text-2xl font-medium">
-            Bli natten over
-          </h2>
-          <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
-            Gårdshuset og herregårdsleiligheten tar imot brudepar og gjester
-            som vil sove tett på festen. For større selskap har vi avtaler med
-            hoteller i Halden, og med taxi og buss.
-          </p>
-          <a
-            href="/visning"
-            className="mt-5 inline-flex items-center gap-1.5 text-xs tracking-[0.18em] uppercase text-primary hover:underline"
-          >
-            Spør om overnatting <ArrowRight className="size-3" />
-          </a>
-        </div>
-        <div className="border bg-card p-8">
-          <Eyebrow>TV, film og produksjon</Eyebrow>
-          <h2 className="mt-2 font-serif text-2xl font-medium">
-            En perfekt scene
-          </h2>
-          <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
-            Østgaard har vært en del av noen av Norges mest populære
-            TV-serier, inkludert <em>Gift ved første blikk</em> og{" "}
-            <em>Jakten på kjærligheten</em>. Med stemningsfulle lokaler, vakre
-            uteområder og en dedikert stab har vi alt som trengs for ditt
-            neste prosjekt, enten det er TV-serie, film, reklame eller fotoopptak.
-          </p>
-          <a
-            href="/visning"
-            className="mt-5 inline-flex items-center gap-1.5 text-xs tracking-[0.18em] uppercase text-primary hover:underline"
-          >
-            Ta kontakt om produksjon <ArrowRight className="size-3" />
-          </a>
+        <div id="utstillinger" className="scroll-mt-20 border bg-card">
+          <div className="relative aspect-[16/10] overflow-hidden">
+            <Image
+              src="/images/landing/galleri.jpg"
+              alt="Kunstutstilling på steinveggene i Gildehallen"
+              fill
+              className="object-cover"
+              sizes="(min-width: 768px) 50vw, 100vw"
+            />
+          </div>
+          <div className="p-8">
+            <Eyebrow>Utstillinger</Eyebrow>
+            <h2 className="mt-2 font-serif text-2xl font-medium">Lille Martine på Østgaard</h2>
+            <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
+              Flere ganger i året fylles Gildehallen med separatutstillinger, i
+              samarbeid med Galleri Lille Martine.
+            </p>
+            <a
+              href="https://www.gallerilillemartine.no/utstillinger"
+              className="mt-5 inline-flex items-center gap-1.5 text-xs tracking-[0.18em] uppercase text-primary hover:underline"
+            >
+              Se utstillingsprogrammet <ArrowRight className="size-3" />
+            </a>
+          </div>
         </div>
       </section>
 

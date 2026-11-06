@@ -46,6 +46,10 @@ export const LEGACY_REDIRECTS: Redirect[] = [
   { source: "/event-list", destination: "/#arrangementer", permanent: true },
   { source: "/event-details/:slug*", destination: "/#arrangementer", permanent: true },
 
+  // Afternoon tea-booking i Wix. Fanges av Google og må følge med ved flyttingen.
+  { source: "/service-page/:slug*", destination: "/#fru-ostgaard", permanent: true },
+  { source: "/booking-calendar/:slug*", destination: "/#fru-ostgaard", permanent: true },
+
   // Fru Østgaard, mat og gavekort
   { source: "/food-and-drinks", destination: "/#fru-ostgaard", permanent: true },
   { source: "/kopi-av-mat-og-drikke-1", destination: "/#fru-ostgaard", permanent: true },
@@ -63,7 +67,7 @@ export const LEGACY_REDIRECTS: Redirect[] = [
 
   // Feiringer og kontakt/booking
   { source: "/livets-begivenheter", destination: "/#feiringer", permanent: true },
-  { source: "/contact-10", destination: "/#kontakt", permanent: true },
+  { source: "/contact-10", destination: "/visning", permanent: true },
   { source: "/book-online", destination: "/#kontakt", permanent: true },
 
   // Stiene sidene hadde mens de lå under /landing i kjøreplan-appen
@@ -78,7 +82,14 @@ export const LEGACY_REDIRECTS: Redirect[] = [
  * intakt, så en billettlenke i en e-post fortsatt virker etter domenebyttet.
  * Visningsskjemaet (/contact-10) følger ikke med: det skal bo her.
  */
-const WIX_FLOWS = ["/event-list", "/event-details/:slug*", "/gift-card", "/book-online"];
+const WIX_FLOWS = [
+  "/event-list",
+  "/event-details/:slug*",
+  "/service-page/:slug*",
+  "/booking-calendar/:slug*",
+  "/gift-card",
+  "/book-online",
+];
 
 const WIX_ORIGINAL = "https://www.garder-ostgaard.no";
 

@@ -45,8 +45,8 @@ const DRIVERS = [
     text: "Vielse i paviljongen ved dammen kommer i tillegg til selve festen, med stoloppsett, lydanlegg og mikrofon.",
   },
   {
-    title: "Overnatting og dagen før",
-    text: "Herregårdsleiligheten og gårdshuset for de nærmeste, og eventuelt en samling på gården kvelden i forveien.",
+    title: "Hotell og dagen før",
+    text: "Rom på Home Hotel Park og transport begge veier for gjestene, og eventuelt en samling på gården kvelden i forveien.",
   },
 ];
 
@@ -196,8 +196,8 @@ export default function PrisPage() {
               <Link href="/lokaler" className="text-primary hover:underline">
                 Se lokalene
               </Link>
-              : Gildehallen, Låvetoppen og Herredstyresalen, med kapasitet og
-              hva som hører til hvert av dem.
+              : Gildehallen og Låvetoppen, med kapasitet og hva som hører til
+              hvert av dem.
             </li>
             <li>
               <Link href="/utevielse" className="text-primary hover:underline">

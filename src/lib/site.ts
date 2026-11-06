@@ -33,8 +33,8 @@ export const SITE = {
   description:
     "Bryllup, feiringer, kurs og konferanser på Østgaard i Halden, en familieeid gård med over 300 års verthistorie. Book en uforpliktende og kostnadsfri visning.",
   email: "ostgaard@garder.no",
-  phone: "+47 977 18 670",
-  phoneHref: "tel:+4797718670",
+  phone: "+47 900 30 053",
+  phoneHref: "tel:+4790030053",
   address: {
     street: "Brødenveien 31",
     postalCode: "1763",
@@ -48,14 +48,15 @@ export const SITE = {
     linkedin: "https://no.linkedin.com/company/ostgaard-event",
   },
   /**
-   * Booking, billetter, gavekort og visningsskjema lever fortsatt på dagens
-   * Wix-system. Når garder-ostgaard.no pekes hit, MÅ Wix-siden få en annen
-   * adresse (f.eks. booking.garder-ostgaard.no), ellers peker disse lenkene
-   * tilbake på oss selv. Sett NEXT_PUBLIC_WIX_URL i Vercel samme dag.
+   * Booking, billetter og gavekort lever fortsatt på dagens Wix-system. Når
+   * garder-ostgaard.no pekes hit, MÅ Wix-siden få en annen adresse (f.eks.
+   * booking.garder-ostgaard.no), ellers peker disse lenkene tilbake på oss
+   * selv. Sett NEXT_PUBLIC_WIX_URL i Vercel samme dag. Visningsskjemaet bor
+   * her på siden.
    */
   booking: {
     base: WIX_URL,
-    visning: `${WIX_URL}/contact-10`,
+    visning: `${SITE_URL}/visning`,
     arrangementer: `${WIX_URL}/event-list`,
     bedrift: `${WIX_URL}/for-bedrifter`,
     gavekort: `${WIX_URL}/gift-card`,
@@ -100,7 +101,7 @@ export const PAGES: SitePage[] = [
     path: "/lokaler",
     title: "Lokaler på Østgaard",
     description:
-      "Gildehallen, Låvetoppen og Herredstyresalen: størrelse, kapasitet og hva som passer til hvilken feiring.",
+      "Gildehallen, Låvetoppen, Kurommet og Fru Østgaard: størrelse, kapasitet og hva som passer til hvilken feiring.",
     changeFrequency: "monthly",
     priority: 0.8,
     section: "Hovedsider",
@@ -109,7 +110,7 @@ export const PAGES: SitePage[] = [
     path: "/bryllup",
     title: "Bryllup på Østgaard",
     description:
-      "Herregårdsbryllup i Halden, rett over én time fra Oslo. Vielse, fest og overnatting på samme gård.",
+      "Herregårdsbryllup i Halden, rett over én time fra Oslo. Vielse og fest på samme gård, med hotell og transport for gjestene.",
     changeFrequency: "monthly",
     priority: 0.9,
     section: "Bryllup",
@@ -118,7 +119,7 @@ export const PAGES: SitePage[] = [
     path: "/bryllup/pris",
     title: "Hva koster et bryllup på Østgaard?",
     description:
-      "Slik settes prisen: lokalleie, mat og drikke, overnatting og hva som er inkludert.",
+      "Slik settes prisen: lokale, mat og drikke, og hva som er inkludert.",
     changeFrequency: "monthly",
     priority: 0.8,
     section: "Bryllup",

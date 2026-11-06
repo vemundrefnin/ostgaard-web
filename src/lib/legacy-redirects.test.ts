@@ -40,7 +40,10 @@ describe("legacy-redirects", () => {
     );
     expect(after["/gift-card"]).toBe("https://booking.garder-ostgaard.no/gift-card");
     // Visningsskjemaet skal bo her, ikke på Wix.
-    expect(after["/contact-10"]).toBe("/#kontakt");
+    expect(after["/contact-10"]).toBe("/visning");
+    expect(after["/service-page/:slug*"]).toBe(
+      "https://booking.garder-ostgaard.no/service-page/:slug*"
+    );
   });
 
   it("alle rader er permanente", () => {

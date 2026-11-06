@@ -21,7 +21,7 @@ export const metadata: Metadata = {
 const REASONS = [
   {
     title: "Hele stedet føles som deres",
-    text: "Med de nærmeste rundt ett langbord i Gildehallen, eller i intime Herredstyresalen, blir kvelden nær på en måte store fester ikke kan bli.",
+    text: "Med de nærmeste rundt ett langbord i Gildehallen eller Kurommet blir kvelden nær på en måte store fester ikke kan bli.",
   },
   {
     title: "Pengene går til opplevelsen",
@@ -37,7 +37,7 @@ const REASONS = [
 const EXAMPLE = [
   { label: "Middag fra eget kjøkken", value: "Meny etter ønske" },
   { label: "Servering, oppdekking og kjøreplan", value: "Inkludert" },
-  { label: "Vielse ved dammen og overnatting", value: "Kan legges til" },
+  { label: "Vielse ved dammen og hotell for gjestene", value: "Kan legges til" },
 ];
 
 export default function IntimtPage() {
@@ -88,8 +88,8 @@ export default function IntimtPage() {
             skreddersydd for antallet deres og uten skjulte tillegg.
           </p>
           <p className="mt-3 max-w-lg text-sm leading-relaxed text-muted-foreground">
-            Vil dere gjøre helgen større, kan de nærmeste bo i
-            Herregårdsleiligheten og samles til pizzakveld på gården dagen før.
+            Vil dere gjøre helgen større, kan de nærmeste samles til
+            pizzakveld på gården dagen før og bo på Home Hotel Park i Halden.
           </p>
           <div className="mt-7 flex flex-wrap gap-3">
             <a

@@ -27,7 +27,7 @@ export interface Occasion {
   text: string;
 }
 
-/** Anledningene utenom bryllup — rundt halvparten av omsetningen. */
+/** Anledningene utenom bryllup. Bryllup er hovedfokus, disse får egen plass. */
 export const OCCASIONS: Occasion[] = [
   {
     key: "konfirmasjon",
@@ -39,7 +39,7 @@ export const OCCASIONS: Occasion[] = [
     key: "jubileum",
     title: "Jubileum og bursdag",
     season: null,
-    text: "Rund dag som fortjener rammer? Vi dekker alt fra 20 rundt ett bord i Herredstyresalen til 150 i Låvetoppen.",
+    text: "Rund dag som fortjener rammer? Vi dekker alt fra små selskap hos Fru Østgaard til 150 gjester i Låvetoppen.",
   },
   {
     key: "minnestund",

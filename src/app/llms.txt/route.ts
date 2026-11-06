@@ -20,9 +20,9 @@ export function GET() {
     `> ${SITE.description}`,
     "",
     `${SITE.legalName} driver gården Østgaard i ${SITE.address.city}, cirka én time fra Oslo. ` +
-      "Gården har tre selskapslokaler (Gildehallen, Låvetoppen og Herredstyresalen), " +
-      "utevielsesplass ved dammen, overnatting på gården og eget kjøkken. " +
-      "Hovedproduktet er bryllup med vielse, fest og overnatting på samme sted. " +
+      "Gården har flere selskapslokaler (Gildehallen, Låvetoppen, Kurommet og Fru Østgaard), " +
+      "utevielsesplass ved dammen og eget kjøkken. " +
+      "Hovedproduktet er bryllup med vielse og fest på samme sted, og avtale med Home Hotel Park i Halden for overnatting. " +
       "Gården holder også konserter, utstillinger, afternoon tea og bedriftsarrangementer.",
     "",
     `Kontakt: ${SITE.email}, ${SITE.phone} (${SITE.openingHours.toLowerCase()}). ` +

@@ -29,7 +29,7 @@ const PATHS = [
   },
   {
     title: "Lokaler",
-    text: "Gildehallen, Låvetoppen og Herredstyresalen. Velg ett, eller kombiner flere gjennom kvelden.",
+    text: "Lune Gildehallen eller lyse Låvetoppen, hver med sin egen hage. Dere har lokalet og hagen helt for dere selv.",
     href: "/lokaler",
     external: false,
     image: "/images/landing/gildehallen.jpg",
@@ -173,10 +173,9 @@ export default function BryllupPage() {
           <h2 className="font-serif text-2xl">Gjør det til en helg</h2>
           <p className="mt-3 max-w-lg text-sm leading-relaxed text-muted-foreground">
             Samle de nærmeste til steinovnsbakt pizza på gården kvelden før,
-            sov i Herregårdsleiligheten med plass til 12–15 av dem dere er
-            aller mest glad i, og bruk søndagen på en rolig avreise. Utsjekk
-            er ikke før klokken 16. For større følger har vi avtaler med
-            hoteller i Halden, og med taxi og buss.
+            og la gjestene bo på Home Hotel Park i Halden, fem minutter unna.
+            Vi har avtale med hotellet og hjelper dere med booking og
+            transport begge veier.
           </p>
         </div>
         <div>
