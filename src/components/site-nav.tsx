@@ -18,7 +18,6 @@ export const NAV = [
   { label: "Om Østgaard", href: "/#om" },
   { label: "Feiringer", href: "/#feiringer" },
   { label: "Arrangementer", href: "/#arrangementer" },
-  { label: "Gårdsbutikken", href: "/#fru-ostgaard" },
   { label: "Kontakt", href: "/#kontakt" },
 ];
 
@@ -55,9 +54,12 @@ export function SiteNav() {
             ))}
           </nav>
           <div className="flex items-center gap-2">
-            <Link href="/visning" className={`${cta} hidden sm:inline-flex`} data-cta="Book visning (topp)">
-              Book visning
-            </Link>
+            {/* Egen wrapper: cta har inline-flex, som ellers vinner over hidden. */}
+            <div className="hidden sm:block">
+              <Link href="/visning" className={cta} data-cta="Book visning (topp)">
+                Book visning
+              </Link>
+            </div>
             <button
               type="button"
               onClick={() => setOpen((v) => !v)}

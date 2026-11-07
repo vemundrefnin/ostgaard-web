@@ -4,53 +4,33 @@ import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 
 /**
- * «Hva koster det?» uten tall.
+ * Prisene på bryllup, åpent og uten at noen må ta kontakt først.
  *
- * Beslutning (Vemund, aug 2026): prisene skal ikke ligge åpent — prisen gis
- * på visningen, fysisk eller digital. Men et blankt «ta kontakt» taper folk
- * som googler «hva koster bryllup»: denne siden fanger dem, forklarer ærlig
- * hva som driver prisen, og gjør visningen til neste steg.
- *
- * INGEN KRONEBELØP PÅ DENNE SIDEN. Prisåpenhet er et eget tema som må
- * vedtas eksplisitt før tall publiseres igjen.
+ * Tallene står her med vilje, ikke hentet fra kjøreplan-appen: prisene varierer
+ * per år, og det holder å oppdatere dem for hånd. Bytt tall og PRICE_YEAR samlet
+ * når ny prisliste gjelder. Sjekk mot /admin/pricing i kjøreplan-appen.
+ * Drikkepriser vises ikke, de gis på visningen.
  */
 
+const PRICE_YEAR = 2028;
+
+/** Tall med mellomrom som tusenskille, for eksempel 2 575. */
+const kr = (n: number) => `${n.toLocaleString("nb-NO").replace(/\s/g, " ")} kr`;
+
 export const metadata: Metadata = {
-  title: "Hva koster et bryllup på Østgaard? | Slik settes prisen",
-  description:
-    "Prisen på et bryllup på Østgaard avhenger av antall gjester, meny, drikke og baroppsett. Vi går gjennom hele regnestykket med dere på en kostnadsfri visning, på gården eller digitalt.",
+  title: `Hva koster et bryllup på Østgaard? | Priser ${PRICE_YEAR}`,
+  description: `Bryllup på Østgaard fra ${kr(2125)} per person. Se priser på meny, vielse og tillegg, og hva som er inkludert i kuvertprisen.`,
 };
 
-
-/** Det som faktisk flytter prisen. Uten tall — se filkommentaren. */
-const DRIVERS = [
-  {
-    title: "Antall gjester",
-    text: "Den største enkeltfaktoren. Vi regner en kuvertpris per gjest som dekker lokalet, serveringen og oppdekkingen, så prisen følger selskapets størrelse. Barn har egen pris.",
-  },
-  {
-    title: "Menyen",
-    text: "Tre, fire, fem eller seks retter fra vårt eget kjøkken. Antall retter og råvarene dere velger avgjør kuvertprisen, og her er spennet størst.",
-  },
-  {
-    title: "Drikke",
-    text: "Dere velger mellom faste drikkepakker til maten eller å betale for det som faktisk går med. To bryllup med samme gjesteliste kan skille betydelig her.",
-  },
-  {
-    title: "Bar og kveldsservering",
-    text: "Åpen bar, bongsystem eller gjestene betaler selv, og om kvelden fortsetter med nattmat. Dere bestemmer nivået, vi bemanner deretter.",
-  },
-  {
-    title: "Vielse på gården",
-    text: "Vielse i paviljongen ved dammen kommer i tillegg til selve festen, med stoloppsett, lydanlegg og mikrofon.",
-  },
-  {
-    title: "Overnatting og dagen før",
-    text: "Herregårdsleiligheten og gårdshuset for de nærmeste, og eventuelt en samling på gården kvelden i forveien.",
-  },
+const MENUS = [
+  { name: "3-retters meny", price: 2125, note: null, recommended: false },
+  { name: "4-retters meny", price: 2575, note: "Med hvilerett (sorbet)", recommended: true },
+  { name: "5-retters meny", price: 2800, note: "Med hvilerett (sorbet)", recommended: false },
+  { name: "6-retters meny", price: 3075, note: "Med hvilerett (sorbet)", recommended: false },
+  { name: "Grillmeny", price: 2625, note: "1. mai til 30. september", recommended: false },
 ];
 
-/** Verdien som ligger i kuvertprisen — svaret på «hva får vi egentlig?». */
+/** Verdien som ligger i kuvertprisen, svaret på «hva får vi egentlig?». */
 const INCLUDED = [
   "Lokalet med uteområde og møbler",
   "Middag fra eget kjøkken",
@@ -61,67 +41,72 @@ const INCLUDED = [
   "Egen digital kjøreplan der dere planlegger alt, og vi ser det samme som dere",
 ];
 
+const EXTRAS = [
+  { name: "Utevielse i paviljongen", price: `fra ${kr(5720)}` },
+  { name: "Minglemat", price: `fra ${kr(80)} per person` },
+  { name: "Kaffe og te med påfyll", price: `${kr(55)} per person` },
+  { name: "Servering av medbrakt kake etter middagen", price: `${kr(50)} per person` },
+  { name: "Nattmat", price: `fra ${kr(140)} per person` },
+  { name: "Allergitilpasning", price: `${kr(80)} per person` },
+  { name: "Måltid til fotograf og andre leverandører", price: `75 % av menyprisen, minst ${kr(675)}` },
+  { name: "Pizzakveld på gården dagen før", price: `${kr(6760)} pluss ${kr(470)} per person` },
+];
+
+const EXAMPLE_GUESTS = 80;
+const EXAMPLE_MENU = 2575;
+const EXAMPLE_CEREMONY = 5720;
+
 export default function PrisPage() {
   return (
     <main className="mx-auto max-w-6xl px-4 py-14">
       <p className="font-serif text-xs tracking-[0.3em] uppercase text-primary">
-        Pris
+        Priser {PRICE_YEAR}
       </p>
       <h1 className="mt-2 max-w-3xl font-serif text-4xl leading-tight font-medium sm:text-5xl">
         Hva koster et bryllup på Østgaard?
       </h1>
       <p className="mt-4 max-w-2xl text-sm leading-relaxed text-muted-foreground sm:text-base">
-        Det ærlige svaret er at det kommer an på dagen dere ser for dere. To
-        bryllup med like mange gjester kan ende svært ulikt, alt etter meny,
-        drikke og hvor lenge kvelden skal vare. Her er hva som avgjør, og
-        hvordan dere får et konkret tall for akkurat deres bryllup.
+        Prisen følger antall gjester og menyen dere velger, og lokalet er med i
+        kuvertprisen. Her er tallene for bryllup i {PRICE_YEAR}. På visningen setter
+        vi opp et konkret forslag for akkurat deres dag, også med drikke.
       </p>
 
-      {/* Hva prisen består av */}
-      <section className="mt-14 border-t pt-12">
-        <h2 className="font-serif text-3xl font-medium">
-          Seks ting avgjør prisen
-        </h2>
-        <div className="mt-9 grid gap-x-10 gap-y-8 sm:grid-cols-2 lg:grid-cols-3">
-          {DRIVERS.map((d, i) => (
-            <div key={d.title}>
-              <span className="font-serif text-2xl text-primary/60">
-                {String(i + 1).padStart(2, "0")}
-              </span>
-              <h3 className="mt-1 font-serif text-xl">{d.title}</h3>
-              <p className="mt-1.5 text-sm leading-relaxed text-muted-foreground">
-                {d.text}
-              </p>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* Hvorfor prisen gis på visningen */}
-      <section className="mt-14 grid gap-10 border-t pt-12 lg:grid-cols-2">
+      {/* Menyene */}
+      <section className="mt-14 grid gap-10 border-t pt-12 lg:grid-cols-[3fr_2fr]">
         <div>
-          <h2 className="font-serif text-2xl">
-            Derfor gir vi prisen på visningen
-          </h2>
-          <p className="mt-3 max-w-lg text-sm leading-relaxed text-muted-foreground">
-            Vi kunne lagt ut et «fra»-tall, men det ville sagt lite om hva
-            deres bryllup faktisk koster, og erfaringsmessig skaper slike tall
-            flere misforståelser enn de løser.
-          </p>
-          <p className="mt-3 max-w-lg text-sm leading-relaxed text-muted-foreground">
-            I stedet setter vi oss ned med dere, hører hva slags dag dere
-            ønsker, og regner ut et konkret og uforpliktende forslag med alle
-            postene synlige. Da vet dere nøyaktig hva dere får, og hva det
-            koster, før dere bestemmer dere.
-          </p>
+          <h2 className="font-serif text-3xl font-medium">Kuvertpris per voksen gjest</h2>
+          <ul className="mt-7 divide-y border-y">
+            {MENUS.map((m) => (
+              <li key={m.name} className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1 py-4">
+                <div>
+                  <p className="font-serif text-xl">
+                    {m.name}
+                    {m.recommended ? (
+                      <span className="ml-3 font-sans text-xs tracking-[0.15em] uppercase text-primary">
+                        Anbefalt
+                      </span>
+                    ) : null}
+                  </p>
+                  {m.note ? <p className="text-sm text-muted-foreground">{m.note}</p> : null}
+                </div>
+                <p className="font-serif text-xl">{kr(m.price)}</p>
+              </li>
+            ))}
+          </ul>
+          <ul className="mt-5 space-y-2 text-sm leading-relaxed text-muted-foreground">
+            <li>Barn til og med 10 år betaler halv pris.</li>
+            <li>
+              Er dere færre enn 45 betalende gjester, kommer en lokalleie på {kr(26000)} i
+              tillegg.
+            </li>
+            <li>Drikke kommer i tillegg, enten i faste pakker eller etter forbruk.</li>
+          </ul>
         </div>
         <aside className="h-fit border bg-secondary/40 p-7">
           <p className="font-serif text-xs tracking-[0.25em] uppercase text-primary">
             Alltid inkludert
           </p>
-          <h3 className="mt-2 font-serif text-2xl">
-            Dette ligger i kuvertprisen
-          </h3>
+          <h3 className="mt-2 font-serif text-2xl">Dette ligger i kuvertprisen</h3>
           <ul className="mt-5 space-y-2 text-sm leading-relaxed text-muted-foreground">
             {INCLUDED.map((item) => (
               <li key={item} className="flex gap-2">
@@ -135,28 +120,64 @@ export default function PrisPage() {
         </aside>
       </section>
 
-      {/* To veier til prisen */}
+      {/* Regneeksempel */}
       <section className="mt-14 border-t pt-12">
-        <h2 className="font-serif text-3xl font-medium">
-          To måter å få prisen på
-        </h2>
+        <h2 className="font-serif text-3xl font-medium">Et regneeksempel</h2>
+        <p className="mt-3 max-w-2xl text-sm leading-relaxed text-muted-foreground">
+          {EXAMPLE_GUESTS} voksne gjester, 4-retters meny og utevielse i paviljongen, før drikke.
+        </p>
+        <dl className="mt-7 max-w-xl divide-y border-y text-sm">
+          <div className="flex justify-between gap-6 py-3">
+            <dt className="text-muted-foreground">
+              {EXAMPLE_GUESTS} gjester à {kr(EXAMPLE_MENU)}
+            </dt>
+            <dd>{kr(EXAMPLE_GUESTS * EXAMPLE_MENU)}</dd>
+          </div>
+          <div className="flex justify-between gap-6 py-3">
+            <dt className="text-muted-foreground">Utevielse</dt>
+            <dd>fra {kr(EXAMPLE_CEREMONY)}</dd>
+          </div>
+          <div className="flex justify-between gap-6 py-3 font-serif text-lg">
+            <dt>Sum før drikke</dt>
+            <dd>fra {kr(EXAMPLE_GUESTS * EXAMPLE_MENU + EXAMPLE_CEREMONY)}</dd>
+          </div>
+        </dl>
+      </section>
+
+      {/* Tillegg */}
+      <section className="mt-14 border-t pt-12">
+        <h2 className="font-serif text-3xl font-medium">Tillegg dere kan velge</h2>
+        <ul className="mt-7 max-w-3xl divide-y border-y text-sm">
+          {EXTRAS.map((e) => (
+            <li key={e.name} className="flex flex-wrap justify-between gap-x-6 gap-y-1 py-3">
+              <span>{e.name}</span>
+              <span className="text-muted-foreground">{e.price}</span>
+            </li>
+          ))}
+        </ul>
+        <p className="mt-5 max-w-2xl text-sm text-muted-foreground">
+          Gjestene kan bo på Home Hotel Park i Halden, fem minutter unna. Vi hjelper med booking
+          og transport begge veier.
+        </p>
+      </section>
+
+      {/* Neste steg */}
+      <section className="mt-14 border-t pt-12">
+        <h2 className="font-serif text-3xl font-medium">Få et forslag for deres dag</h2>
         <p className="mt-3 max-w-2xl text-sm leading-relaxed text-muted-foreground">
           Begge deler er kostnadsfritt og helt uforpliktende.
         </p>
         <div className="mt-9 grid gap-6 md:grid-cols-2">
           <div className="flex flex-col border bg-card p-8">
-            <p className="font-serif text-xs tracking-[0.25em] uppercase text-primary">
-              Anbefalt
-            </p>
+            <p className="font-serif text-xs tracking-[0.25em] uppercase text-primary">Anbefalt</p>
             <h3 className="mt-2 font-serif text-2xl">Visning på gården</h3>
             <p className="mt-3 flex-1 text-sm leading-relaxed text-muted-foreground">
-              Vi går rundt sammen: lokalene, paviljongen ved dammen og
-              uteområdene. Dere ser hvordan dagen kan henge sammen, og vi setter
-              opp prisen for akkurat deres bryllup mens vi snakker. De fleste
-              par bestemmer seg først etter å ha stått i rommet.
+              Vi går rundt sammen: lokalene, paviljongen ved dammen og uteområdene. Dere ser hvordan
+              dagen kan henge sammen, og vi regner på akkurat deres bryllup mens vi snakker.
             </p>
             <a
               href="/visning"
+              data-cta="Book visning (pris)"
               className="mt-6 inline-flex w-fit items-center gap-2 border border-primary bg-primary px-6 py-3 text-xs tracking-[0.2em] uppercase text-primary-foreground transition-colors hover:bg-primary/90"
             >
               Book visning på gården <ArrowRight className="size-3.5" />
@@ -168,23 +189,18 @@ export default function PrisPage() {
             </p>
             <h3 className="mt-2 font-serif text-2xl">Digital visning</h3>
             <p className="mt-3 flex-1 text-sm leading-relaxed text-muted-foreground">
-              Får dere ikke til å komme innom med det første, tar vi den samme
-              gjennomgangen på video. Vi viser lokalene, går gjennom
-              mulighetene og setter opp prisen, så kan dere heller komme på
-              besøk når det passer bedre.
+              Får dere ikke til å komme innom med det første, tar vi den samme gjennomgangen på
+              video, så kan dere heller komme på besøk når det passer bedre.
             </p>
             <a
               href="/visning"
+              data-cta="Be om digital visning (pris)"
               className="mt-6 inline-flex w-fit items-center gap-2 border border-primary px-6 py-3 text-xs tracking-[0.2em] uppercase text-primary transition-colors hover:bg-primary hover:text-primary-foreground"
             >
               Be om digital visning <ArrowRight className="size-3.5" />
             </a>
           </div>
         </div>
-        <p className="mt-5 max-w-2xl text-sm text-muted-foreground">
-          Nevn gjerne dato, omtrentlig antall gjester og hva slags dag dere ser
-          for dere, så har vi noe å regne på når vi møtes.
-        </p>
       </section>
 
       {/* Videre lesning */}
@@ -196,8 +212,7 @@ export default function PrisPage() {
               <Link href="/lokaler" className="text-primary hover:underline">
                 Se lokalene
               </Link>
-              : Gildehallen, Låvetoppen og Herredstyresalen, med kapasitet og
-              hva som hører til hvert av dem.
+              : Gildehallen og Låvetoppen, med kapasitet og hva som hører til hvert av dem.
             </li>
             <li>
               <Link href="/utevielse" className="text-primary hover:underline">
@@ -206,10 +221,7 @@ export default function PrisPage() {
               , med en praktisk guide til hvordan man faktisk blir viet utendørs.
             </li>
             <li>
-              <Link
-                href="/bryllup/intimt"
-                className="text-primary hover:underline"
-              >
+              <Link href="/bryllup/intimt" className="text-primary hover:underline">
                 Intimt bryllup
               </Link>{" "}
               for dere som feirer med de nærmeste 20–45.

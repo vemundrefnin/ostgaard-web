@@ -30,6 +30,15 @@ export async function POST(request: Request) {
     delete body.period;
   }
 
+  // «Hvor hørte dere om oss?» legges i meldingen, som blir notatet på
+  // henvendelsen i appen. Appen trenger da ingen endring.
+  const source = String(body.source ?? "").trim();
+  delete body.source;
+  if (source) {
+    const message = String(body.message ?? "").trim();
+    body.message = [message, `Hørte om oss via: ${source}`].filter(Boolean).join("\n\n");
+  }
+
   const upstream = await fetch(`${base}/api/public/henvendelse`, {
     method: "POST",
     headers: {

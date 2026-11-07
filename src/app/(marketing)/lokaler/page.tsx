@@ -9,36 +9,65 @@ import { ArrowRight } from "lucide-react";
  */
 
 export const metadata: Metadata = {
-  title: "Lokaler på Østgaard | Gildehallen, Låvetoppen og Herredstyresalen",
+  title: "Lokaler på Østgaard | Gildehallen, Låvetoppen og Kurommet",
   description:
-    "Velg ett eller flere av lokalene på Østgaard: historiske Gildehallen (130 gjester), lyse Låvetoppen (150 gjester) og intime Herredstyresalen. Book en kostnadsfri visning.",
+    "Velg lokalet som passer dagen deres på Østgaard: historiske Gildehallen (130 gjester), lyse Låvetoppen (150 gjester), Kurommet (80 gjester) og Fru Østgaard. Book en kostnadsfri visning.",
 };
 
-
-const VENUES = [
+/** Festlokalene holder åpent til 02:00. */
+const VENUES: {
+  name: string;
+  capacity: string;
+  text: string;
+  outdoor: string | null;
+  closes: string | null;
+  image: string | null;
+  alt: string;
+}[] = [
   {
     name: "Gildehallen",
     capacity: "Opptil 130 gjester",
-    text: "Historisk sal fra 1600-tallet med røffe steinvegger og stemningsfull borddekking. Gårdshagen som uteområde hører til.",
+    text: "Lun og historisk sal fra 1600-tallet med røffe steinvegger og stemningsfull borddekking. Her holder de fleste av parene våre bryllupet sitt. Gårdshagen hører til.",
     outdoor: "Gårdshagen",
+    closes: "02:00",
     image: "/images/landing/gildehallen.jpg",
     alt: "Gildehallen dekket til bryllupsmiddag med lysslynger i taket",
   },
   {
     name: "Låvetoppen",
     capacity: "Opptil 150 gjester",
-    text: "Stort og lyst lokale med elegant, klassisk atmosfære, gårdens største sal. Solvesthagen som uteområde hører til.",
+    text: "Gårdens største og lyseste sal, laget for store fester, dans og lange sommerkvelder. Fast prosjektor og lerret er på plass. Solvesthagen hører til.",
     outdoor: "Solvesthagen",
-    image: "/images/landing/gildehallen-2.jpg",
-    alt: "Festdekket sal på Østgaard",
+    closes: "02:00",
+    image: "/images/landing/lavetoppen.jpg",
+    alt: "Låvetoppen dekket til fest med lysekroner og hvite stoffer under takbjelkene",
   },
   {
-    name: "Herredstyresalen",
-    capacity: "Opptil 20 gjester",
-    text: "Historisk og særegent rom for de intime anledningene, perfekt til fotostund, vielse i lite format eller middagen med de aller nærmeste.",
-    outdoor: "Etter avtale",
-    image: null,
-    alt: "",
+    name: "Kurommet",
+    capacity: "Opptil 80 gjester",
+    text: "Mellomstort lokale for konfirmasjon, jubileum, minnestund og kurs.",
+    outdoor: null,
+    closes: null,
+    image: "/images/landing/kurommet.jpg",
+    alt: "Kurommet satt opp til kurs med langbord og hvite steinvegger",
+  },
+  {
+    name: "Fru Østgaard",
+    capacity: "40 til 60 gjester",
+    text: "Vårt lille spiskammer, for afternoon tea, minnestund og mindre selskaper.",
+    outdoor: null,
+    closes: null,
+    image: "/images/landing/fru-ostgaard.jpg",
+    alt: "Egenproduserte varer i butikken hos Fru Østgaard",
+  },
+  {
+    name: "Paviljongen",
+    capacity: "Plass til rundt 200 gjester",
+    text: "Utevielse ved dammen. Vi setter ut stoler etter hvor mange dere blir.",
+    outdoor: "Ved dammen",
+    closes: null,
+    image: "/images/landing/utevielse.jpg",
+    alt: "Utevielse ved dammen med paviljong og gjester",
   },
 ];
 
@@ -59,12 +88,13 @@ export default function LokalerPage() {
         Lokaler
       </p>
       <h1 className="mt-2 max-w-3xl font-serif text-4xl leading-tight font-medium sm:text-5xl">
-        Velg ett eller flere av våre lokaler for deres helt unike dag
+        Finn lokalet som passer deres helt unike dag
       </h1>
       <p className="mt-4 max-w-2xl text-sm leading-relaxed text-muted-foreground sm:text-base">
-        Hvert lokale har sin egen karakter, og de kan kombineres, for eksempel
-        middag i ett og fest i et annet. Alle lokalene holder åpent til 02:00,
-        og meny settes opp etter ønske.
+        Hvert lokale har sin egen karakter, og meny settes opp etter ønske. Dere
+        har lokalet og hagen helt for dere selv, også når gården har flere
+        arrangementer samme dag. For en ekstra spesiell fotostund kan
+        Herredstyresalen legges til.
       </p>
 
       <div className="mt-12 space-y-10">
@@ -94,16 +124,22 @@ export default function LokalerPage() {
               <p className="mt-3 max-w-lg text-sm leading-relaxed text-muted-foreground">
                 {v.text}
               </p>
-              <dl className="mt-4 space-y-1 text-sm">
-                <div className="flex gap-2">
-                  <dt className="text-muted-foreground">Uteområde:</dt>
-                  <dd>{v.outdoor}</dd>
-                </div>
-                <div className="flex gap-2">
-                  <dt className="text-muted-foreground">Åpent til:</dt>
-                  <dd>02:00</dd>
-                </div>
-              </dl>
+              {v.outdoor || v.closes ? (
+                <dl className="mt-4 space-y-1 text-sm">
+                  {v.outdoor ? (
+                    <div className="flex gap-2">
+                      <dt className="text-muted-foreground">Uteområde:</dt>
+                      <dd>{v.outdoor}</dd>
+                    </div>
+                  ) : null}
+                  {v.closes ? (
+                    <div className="flex gap-2">
+                      <dt className="text-muted-foreground">Åpent til:</dt>
+                      <dd>{v.closes}</dd>
+                    </div>
+                  ) : null}
+                </dl>
+              ) : null}
               <a
                 href="/visning"
                 className="mt-6 inline-flex items-center gap-2 border border-primary bg-primary px-6 py-3 text-xs tracking-[0.2em] uppercase text-primary-foreground transition-colors hover:bg-primary/90"

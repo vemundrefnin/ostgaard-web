@@ -20,6 +20,17 @@ const TYPES = [
   { value: "MINNESTUND", label: "Minnestund" },
 ];
 
+/** «Hvor hørte dere om oss?» Svaret går i notatet på henvendelsen. */
+const SOURCES = [
+  "Google",
+  "Instagram",
+  "Facebook",
+  "Anbefaling fra noen vi kjenner",
+  "Var i bryllup eller på arrangement på Østgaard",
+  "Annonse",
+  "Annet",
+];
+
 const input =
   "w-full border bg-background px-3 py-2.5 text-sm outline-none transition-colors focus:border-primary";
 const label = "block text-xs tracking-[0.15em] uppercase text-muted-foreground";
@@ -55,7 +66,7 @@ export function VisningForm() {
         throw new Error(body.error ?? "Noe gikk galt.");
       }
       setState("sent");
-      track("inquiry_submitted", { event_type: data.eventType, page });
+      track("inquiry_submitted", { event_type: data.eventType, source: data.source, page });
     } catch (err) {
       setState("error");
       setError(err instanceof Error ? err.message : "Noe gikk galt.");
@@ -134,6 +145,19 @@ export function VisningForm() {
           </label>
           <input id="guestCount" name="guestCount" type="number" min={1} inputMode="numeric" className={input} />
         </div>
+      </div>
+      <div>
+        <label htmlFor="source" className={label}>
+          Hvor hørte dere om oss?
+        </label>
+        <select id="source" name="source" defaultValue="" className={input}>
+          <option value="">Velg om dere vil</option>
+          {SOURCES.map((s) => (
+            <option key={s} value={s}>
+              {s}
+            </option>
+          ))}
+        </select>
       </div>
       <div>
         <label htmlFor="message" className={label}>
