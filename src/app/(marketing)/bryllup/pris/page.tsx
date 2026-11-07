@@ -2,33 +2,21 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
+import { MENUS, PRICE_YEAR, kr } from "@/lib/priser";
 
 /**
  * Prisene på bryllup, åpent og uten at noen må ta kontakt først.
  *
- * Tallene står her med vilje, ikke hentet fra kjøreplan-appen: prisene varierer
- * per år, og det holder å oppdatere dem for hånd. Bytt tall og PRICE_YEAR samlet
- * når ny prisliste gjelder. Sjekk mot /admin/pricing i kjøreplan-appen.
+ * Menyprisene og året står i src/lib/priser.ts, fordi forsiden viser dem også.
+ * Tilleggene står her. Bytt alt samlet når ny prisliste gjelder, og sjekk mot
+ * /admin/pricing i kjøreplan-appen.
  * Drikkepriser vises ikke, de gis på visningen.
  */
-
-const PRICE_YEAR = 2028;
-
-/** Tall med mellomrom som tusenskille, for eksempel 2 575. */
-const kr = (n: number) => `${n.toLocaleString("nb-NO").replace(/\s/g, " ")} kr`;
 
 export const metadata: Metadata = {
   title: `Hva koster et bryllup på Østgaard? | Priser ${PRICE_YEAR}`,
   description: `Bryllup på Østgaard fra ${kr(2125)} per person. Se priser på meny, vielse og tillegg, og hva som er inkludert i kuvertprisen.`,
 };
-
-const MENUS = [
-  { name: "3-retters meny", price: 2125, note: null, recommended: false },
-  { name: "4-retters meny", price: 2575, note: "Med hvilerett (sorbet)", recommended: true },
-  { name: "5-retters meny", price: 2800, note: "Med hvilerett (sorbet)", recommended: false },
-  { name: "6-retters meny", price: 3075, note: "Med hvilerett (sorbet)", recommended: false },
-  { name: "Grillmeny", price: 2625, note: "1. mai til 30. september", recommended: false },
-];
 
 /** Verdien som ligger i kuvertprisen, svaret på «hva får vi egentlig?». */
 const INCLUDED = [

@@ -14,7 +14,7 @@ import { SITE } from "@/lib/site";
 
 export default function MarketingLayout({ children }: { children: ReactNode }) {
   return (
-    <div className="min-h-screen bg-background pb-16 text-foreground sm:pb-0">
+    <div className="mork min-h-screen bg-background pb-16 text-foreground sm:pb-0">
       <SiteNav />
 
       {children}
