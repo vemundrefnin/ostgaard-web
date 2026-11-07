@@ -2,9 +2,10 @@
 @import "shadcn/tailwind.css";
 
 /*
- * Østgaards uttrykk: klassisk, stødig, varmt. Bare lyst tema. Aldri rent
- * hvitt, aldri rent svart. Palett: cream / parchment / ink / moss / brass /
- * linen. Samme tokens som kjøreplan-appen, så de to ser ut som ett merke.
+ * Østgaards uttrykk: klassisk, stødig, varmt. Aldri rent hvitt, aldri rent
+ * svart. Palett: cream / parchment / ink / moss / brass / linen. Samme tokens
+ * som kjøreplan-appen, så de to ser ut som ett merke. Markedssidene er mørke
+ * (se .mork nederst), infosidene til leverandører er lyse.
  */
 
 @theme inline {
@@ -87,5 +88,56 @@
   ::selection {
     background: var(--color-moss);
     color: var(--color-cream);
+  }
+}
+
+/*
+ * Mørke markedssider. Rammen i (marketing)/layout.tsx har klassen, og fargene
+ * byttes på hele dokumentet, så sider, meny og bunntekst følger med uten egen
+ * kode. /info/* har sin egen ramme og forblir lys.
+ */
+:root:has(.mork),
+.mork {
+  --background: hsl(80 14% 9%);
+  --foreground: hsl(43 30% 92%);
+  --card: hsl(80 12% 12%);
+  --card-foreground: hsl(43 30% 92%);
+  --popover: hsl(80 12% 12%);
+  --popover-foreground: hsl(43 30% 92%);
+  --primary: hsl(38 45% 62%); /* gull */
+  --primary-foreground: hsl(80 14% 9%);
+  --secondary: hsl(80 13% 13%);
+  --secondary-foreground: hsl(43 30% 92%);
+  --muted: hsl(80 13% 13%);
+  --muted-foreground: hsl(43 12% 70%);
+  --accent: hsl(38 45% 62%);
+  --accent-foreground: hsl(80 14% 9%);
+  --border: hsl(40 30% 85% / 0.16);
+  --input: hsl(40 30% 85% / 0.16);
+  --ring: hsl(38 45% 62%);
+}
+
+/* Bildene i toppen av forsiden: myk overgang og langsom zoom. */
+.hero-slide {
+  opacity: 0;
+  transition: opacity 1.4s ease;
+}
+.hero-slide.is-active {
+  opacity: 1;
+}
+.hero-slide.is-moving img {
+  animation: hero-zoom 8s ease-out forwards;
+}
+@keyframes hero-zoom {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(1.06);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-slide.is-moving img {
+    animation: none;
   }
 }

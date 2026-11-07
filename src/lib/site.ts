@@ -31,7 +31,7 @@ export const SITE = {
   legalName: "Østgaard Event AS",
   tagline: "Bryllup i unike omgivelser i Halden",
   description:
-    "Bryllup, feiringer, kurs og konferanser på Østgaard i Halden, en familieeid gård med over 300 års verthistorie. Book en uforpliktende og kostnadsfri visning.",
+    "Bryllup, feiringer, kurs og konferanser på Østgaard i Halden, en familieeid gård med historie tilbake til 1636. Book en uforpliktende og kostnadsfri visning.",
   email: "ostgaard@garder.no",
   phone: "+47 900 30 053",
   phoneHref: "tel:+4790030053",

@@ -1,8 +1,9 @@
 import Image from "next/image";
 import { SITE } from "@/lib/site";
 import { ArrowRight } from "lucide-react";
-import { HeroVideo } from "@/components/landing/hero-video";
+import { HeroSlides } from "@/components/landing/hero-slides";
 import { occasionsForSeason, seasonBand } from "@/lib/landing/season";
+import { MENUS, PRICE_YEAR, kr } from "@/lib/priser";
 import { formatEventDate, upcomingEvents } from "@/lib/wix-events";
 
 /**
@@ -20,26 +21,35 @@ export const revalidate = 3600;
 const CARDS = [
   {
     title: "Lokaler",
-    text: "Ønsker dere å finne det perfekte lokale som setter stemningen for hele kvelden? Vi har flere ulike lokaler dere kan velge mellom.",
+    text: "Lune Gildehallen for 130, eller lyse Låvetoppen for 150.",
     href: "/lokaler",
-    image: "/images/landing/gildehallen.jpg",
+    image: "/images/landing/gildehallen-dekket.jpg",
     alt: "Gildehallen dekket til bryllupsmiddag med lysslynger i taket",
   },
   {
-    title: "Bryllupspakker",
-    text: "Bryllup i herregårdstil, eller et mer uformelt bryllup? På Østgaard arrangerer vi akkurat det bryllupet dere ønsker.",
-    href: "/bryllup",
-    image: "/images/landing/brudepar-alle.jpg",
-    alt: "Brudepar hånd i hånd i alleen på Østgaard",
+    title: "Utevielse",
+    text: "Paviljongen ved dammen, med plass til rundt 200 gjester.",
+    href: "/utevielse",
+    image: "/images/landing/paviljong-dammen.jpg",
+    alt: "Hvit paviljong som speiler seg i dammen på Østgaard",
   },
   {
-    title: "Utevielse",
-    text: "Drømmer dere om utevielse i vakker natur som setter rammen for hele dagen?",
-    href: "/utevielse",
-    image: "/images/landing/utevielse.jpg",
-    alt: "Utevielse ved dammen med paviljong og gjester",
+    title: "Priser",
+    text: `Fra ${kr(MENUS[0].price)} per person, med lokalet inkludert.`,
+    href: "/bryllup/pris",
+    image: "/images/landing/servitor-alleen.jpg",
+    alt: "Servitør fra Østgaard i alleen opp mot gården",
   },
 ];
+
+/** Stilene som går igjen, så forsiden holder én skriftstørrelse på telefon. */
+const H2 = "font-serif text-[clamp(1.55rem,1.1rem+2.2vw,3.1rem)] leading-[1.14] font-normal";
+const LEAD = "text-[0.95rem] leading-relaxed text-muted-foreground lg:text-[1.05rem]";
+const BTN =
+  "inline-flex min-h-[46px] items-center justify-center gap-2 border border-primary bg-primary px-[22px] text-[0.66rem] tracking-[0.22em] uppercase text-primary-foreground transition-colors hover:bg-primary/85";
+const BTN_LINE =
+  "inline-flex min-h-[46px] items-center justify-center border border-foreground/45 px-[22px] text-[0.66rem] tracking-[0.22em] uppercase text-foreground transition-colors hover:bg-foreground/10";
+const LINK = "inline-flex items-center gap-1.5 text-[0.66rem] tracking-[0.2em] uppercase text-primary hover:underline";
 
 const REVIEWS = [
   {
@@ -60,28 +70,28 @@ const REVIEWS = [
 const PLAN = [
   {
     title: "Book en visning",
-    text: "Vi møter dere på gården, viser lokalene og uteområdene, og snakker om hvordan akkurat deres dag kan se ut. Uforpliktende og kostnadsfritt.",
+    text: "Vi møter dere på gården og viser lokalene og uteområdene. Uforpliktende og kostnadsfritt.",
   },
   {
     title: "Planlegg alt på ett sted",
-    text: "Dere får deres egen digitale kjøreplan hvor meny, gjesteliste, bordplan og tidsplan samles. Dere fyller ut i eget tempo, og vi ser det samme som dere.",
+    text: "Meny, gjesteliste, bordplan og tidsplan samles i deres egen digitale kjøreplan.",
   },
   {
     title: "Nyt dagen",
-    text: "På selve dagen styrer vertskapet kjøkken, servering og logistikk minutt for minutt etter planen. Dere har én jobb: å være til stede i egen fest.",
+    text: "Vertskapet styrer resten. Dere har én jobb: å være til stede i egen fest.",
   },
 ];
 
-/** 300 års verthistorie — signaturelementet i om-seksjonen. */
+/** Verthistorien — signaturelementet i om-seksjonen. */
 const HISTORY = [
-  { when: "1700-tallet", what: "Østgaard blir stedet for feiring og sammenkomster i Halden" },
+  { when: "1636", what: "Lokalene bygges, og Østgaard blir stedet for feiring og sammenkomster" },
   { when: "I dag", what: "7. generasjon: Nina og Lars Garder driver gården med sine fire barn" },
   { when: "500+", what: "minnerike begivenheter: bryllup, jubileer, kurs og konferanser" },
 ];
 
 function Eyebrow({ children }: { children: React.ReactNode }) {
   return (
-    <p className="font-serif text-xs tracking-[0.3em] uppercase text-primary">
+    <p className="text-[0.62rem] tracking-[0.3em] uppercase text-primary">
       {children}
     </p>
   );
@@ -94,34 +104,42 @@ export default async function LandingPage() {
   const occasions = occasionsForSeason();
 
   return (
-    <main>
-      {/* Hero — dronefilm over gården, stillbilde for reduced-motion */}
-      <section className="relative flex min-h-[82vh] items-end">
-        <HeroVideo poster="/images/landing/hero-drone-poster.jpg" />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/65 via-black/25 to-black/10" />
-        <div className="relative mx-auto w-full max-w-6xl px-4 pb-16 text-white">
-          <p className="text-xs tracking-[0.35em] uppercase text-white/80">
-            Østgaard · Halden · rett over én time fra Oslo
+    <main className="text-[15px] leading-[1.62] lg:text-base">
+      {/* Toppen: logo øverst, bildene bytter seg, teksten nederst. På telefon
+          ligger visningsknappen alltid i bunnlinjen, så den vises ikke her.
+          Egen wrapper: BTN har inline-flex, som ellers vinner over hidden. */}
+      <section className="relative flex min-h-[calc(100svh-4rem)] items-end overflow-hidden bg-background text-cream sm:min-h-[92svh]">
+        <HeroSlides />
+        <div
+          aria-hidden
+          className="absolute inset-0"
+          style={{
+            background:
+              "linear-gradient(to bottom, hsl(80 14% 9% / .88), hsl(80 14% 9% / .42) 26%, hsl(80 14% 9% / .1) 46%, hsl(80 14% 9% / .92))",
+          }}
+        />
+        <Image
+          src="/images/landing/logo-ostgaard-lys.png"
+          alt="Østgaard, herregården for unike minner"
+          width={900}
+          height={653}
+          priority
+          sizes="(min-width: 768px) 200px, 150px"
+          className="absolute top-[18px] left-1/2 z-10 h-auto w-[150px] -translate-x-1/2 md:w-[200px]"
+        />
+        <div className="relative z-10 mx-auto w-full max-w-6xl px-5 pb-[30px] lg:pb-[60px]">
+          <p className="text-[0.62rem] tracking-[0.3em] uppercase text-[hsl(38_55%_74%)]">
+            Halden · rett over én time fra Oslo
           </p>
-          <h1 className="mt-3 max-w-3xl font-serif text-5xl leading-[1.05] font-medium sm:text-6xl">
+          <h1 className="mt-2.5 font-serif text-[clamp(1.9rem,1.2rem+3vw,4.4rem)] leading-[1.12] font-normal">
             Bryllup i unike omgivelser
           </h1>
-          <p className="mt-4 max-w-xl text-sm leading-relaxed text-white/90 sm:text-base">
-            På Østgaard får dere være gjester i egen fest, så tar vertskapet seg
-            av resten. Start med en uforpliktende og kostnadsfri visning.
+          <p className="mt-2 text-[clamp(0.8rem,3.75vw,1.05rem)] whitespace-nowrap text-cream/90">
+            Dere feirer. Vertskapet tar seg av resten.
           </p>
-          <div className="mt-7 flex flex-wrap gap-3">
-            <a
-              href="/visning"
-              className="inline-flex items-center gap-2 border border-white bg-white px-6 py-3 text-xs tracking-[0.2em] uppercase text-foreground transition-colors hover:bg-white/90"
-            >
-              Book gratis visning <ArrowRight className="size-3.5" />
-            </a>
-            <a
-              href="#plan"
-              className="inline-flex items-center border border-white/70 px-6 py-3 text-xs tracking-[0.2em] uppercase text-white transition-colors hover:bg-white/10"
-            >
-              Slik fungerer det
+          <div className="mt-[22px] hidden sm:block">
+            <a href="/visning" className={BTN}>
+              Book gratis visning
             </a>
           </div>
         </div>
@@ -131,16 +149,13 @@ export default async function LandingPage() {
           sidetittel står fast på bryllup, ellers mister vi bryllupssignalet
           i Google de månedene folk fortsatt søker (278 dagers ledetid). */}
       {band && (
-        <aside className="border-b bg-secondary/60">
-          <div className="mx-auto flex max-w-6xl flex-wrap items-center gap-x-4 gap-y-1 px-4 py-3">
-            <span className="font-serif text-xs tracking-[0.25em] uppercase text-primary">
+        <aside className="border-b bg-secondary">
+          <div className="mx-auto flex max-w-6xl flex-wrap items-center gap-x-4 gap-y-1 px-5 py-3">
+            <span className="text-[0.62rem] tracking-[0.25em] uppercase text-primary">
               {band.eyebrow}
             </span>
-            <p className="flex-1 text-sm text-muted-foreground">{band.text}</p>
-            <a
-              href={band.href}
-              className="inline-flex items-center gap-1.5 text-xs tracking-[0.18em] uppercase text-primary hover:underline"
-            >
+            <p className="flex-1 basis-64 text-sm text-muted-foreground">{band.text}</p>
+            <a href={band.href} className={LINK}>
               {band.cta} <ArrowRight className="size-3" />
             </a>
           </div>
@@ -148,19 +163,16 @@ export default async function LandingPage() {
       )}
 
       {/* Tre hovedkort */}
-      <section id="bryllup" className="mx-auto max-w-6xl scroll-mt-20 px-4 py-20">
+      <section id="bryllup" className="mx-auto max-w-6xl scroll-mt-20 px-5 py-16 lg:py-24">
         <Eyebrow>Deres dag, deres rammer</Eyebrow>
-        <h2 className="mt-2 max-w-2xl font-serif text-3xl font-medium sm:text-4xl">
-          Fra herregårdsbryllup til utevielse ved dammen
-        </h2>
-        <div className="mt-10 grid gap-6 md:grid-cols-3">
+        <h2 className={`mt-2.5 max-w-2xl ${H2}`}>Vielse, middag og fest på samme gård</h2>
+        <p className={`mt-3 max-w-2xl ${LEAD}`}>
+          Vertskapet har ansvaret for det praktiske, så dere kan være sammen med gjestene.
+        </p>
+        <div className="mt-8 grid gap-8 md:grid-cols-3">
           {CARDS.map((card) => (
-            <a
-              key={card.title}
-              href={card.href}
-              className="group block border bg-card transition-shadow hover:shadow-md"
-            >
-              <div className="relative aspect-[4/3] overflow-hidden">
+            <a key={card.title} href={card.href} className="group block">
+              <div className="relative aspect-[3/2] overflow-hidden">
                 <Image
                   src={card.image}
                   alt={card.alt}
@@ -169,119 +181,129 @@ export default async function LandingPage() {
                   sizes="(min-width: 768px) 33vw, 100vw"
                 />
               </div>
-              <div className="p-5">
-                <h3 className="font-serif text-lg tracking-[0.15em] uppercase">
-                  {card.title}
-                </h3>
-                <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-                  {card.text}
-                </p>
-                <span className="mt-3 inline-flex items-center gap-1.5 text-xs tracking-[0.18em] uppercase text-primary">
-                  Les mer <ArrowRight className="size-3" />
-                </span>
-              </div>
+              <h3 className="mt-3.5 font-serif text-[1.28rem] font-normal">{card.title}</h3>
+              <p className="mt-1 text-[0.88rem] leading-relaxed text-muted-foreground">
+                {card.text}
+              </p>
             </a>
           ))}
+        </div>
+        <a href="/bryllup" className={`mt-8 ${LINK}`}>
+          Les mer om bryllup på Østgaard <ArrowRight className="size-3" />
+        </a>
+      </section>
+
+      {/* Priser */}
+      <section className="border-t">
+        <div className="mx-auto grid max-w-6xl gap-8 px-5 py-16 lg:grid-cols-2 lg:gap-16 lg:py-24">
+          <div>
+            <Eyebrow>Priser {PRICE_YEAR}</Eyebrow>
+            <h2 className={`mt-2.5 ${H2}`}>Åpne priser, med lokalet inkludert</h2>
+            <p className={`mt-3 ${LEAD}`}>
+              Kuvertprisen dekker lokale, middag, servering, oppdekking og egen digital
+              kjøreplan. Drikke kommer i tillegg.
+            </p>
+            <a href="/bryllup/pris" className={`mt-[22px] ${BTN_LINE}`}>
+              Se alle prisene
+            </a>
+          </div>
+          <div>
+            {MENUS.slice(0, 4).map((menu) => (
+              <div
+                key={menu.name}
+                className="flex items-baseline justify-between gap-4 border-b py-3 font-serif text-[1.12rem]"
+              >
+                <span>{menu.name}</span>
+                <span className="whitespace-nowrap">{kr(menu.price)}</span>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
       {/* Planen — tre steg fra visning til bryllupsdag */}
       <section id="plan" className="scroll-mt-20 border-t">
-        <div className="mx-auto grid max-w-6xl gap-12 px-4 py-20 lg:grid-cols-[2fr_3fr]">
-          <div className="relative hidden aspect-[3/4] overflow-hidden border lg:block">
-            <Image
-              src="/images/landing/hero.jpg"
-              alt="Nygift par i blomsterengen på Østgaard"
-              fill
-              className="object-cover"
-              sizes="(min-width: 1024px) 40vw, 100vw"
-            />
-          </div>
+        <div className="mx-auto grid max-w-6xl items-center gap-10 px-5 py-16 lg:grid-cols-2 lg:gap-16 lg:py-24">
           <div>
             <Eyebrow>Slik fungerer det</Eyebrow>
-            <h2 className="mt-2 font-serif text-3xl font-medium sm:text-4xl">
-              Dere skal ikke være prosjektledere på egen bryllupsdag
-            </h2>
-            <p className="mt-3 max-w-xl text-sm leading-relaxed text-muted-foreground">
-              Å planlegge bryllup betyr fort hundre løse tråder og et regneark
-              ingen har kontroll på. Hos oss er veien fra første besøk til
-              ferdig fest tre steg:
-            </p>
-            <ol className="mt-8 space-y-7">
+            <h2 className={`mt-2.5 ${H2}`}>Dere skal ikke være prosjektledere på egen bryllupsdag</h2>
+            <ol className="mt-8 space-y-6">
               {PLAN.map((step, i) => (
                 <li key={step.title} className="flex gap-5">
-                  <span className="font-serif text-3xl text-primary/60">
-                    {i + 1}
-                  </span>
+                  <span className="font-serif text-2xl text-primary">{i + 1}</span>
                   <div>
-                    <h3 className="font-serif text-lg">{step.title}</h3>
-                    <p className="mt-1 text-sm leading-relaxed text-muted-foreground">
+                    <h3 className="font-serif text-[1.28rem] font-normal">{step.title}</h3>
+                    <p className="mt-1 text-[0.88rem] leading-relaxed text-muted-foreground">
                       {step.text}
                     </p>
                   </div>
                 </li>
               ))}
             </ol>
-            <a
-              href="/visning"
-              className="mt-9 inline-flex items-center gap-2 border border-primary bg-primary px-6 py-3 text-xs tracking-[0.2em] uppercase text-primary-foreground transition-colors hover:bg-primary/90"
-            >
-              Book gratis visning <ArrowRight className="size-3.5" />
-            </a>
+          </div>
+          <div className="relative aspect-[4/5] overflow-hidden">
+            <Image
+              src="/images/landing/brudepar-rygg.jpg"
+              alt="Brudepar hånd i hånd gjennom hagen, bruden ser seg tilbake"
+              fill
+              className="object-cover"
+              sizes="(min-width: 1024px) 50vw, 100vw"
+            />
+          </div>
+        </div>
+      </section>
+
+      {/* Omtaler */}
+      <section className="border-t">
+        <div className="mx-auto max-w-6xl px-5 py-16 lg:py-24">
+          <Eyebrow>Fra parene våre</Eyebrow>
+          <h2 className={`mt-2.5 max-w-2xl ${H2}`}>Mer enn 500 minnerike begivenheter</h2>
+          <div className="mt-8 grid gap-8 md:grid-cols-3">
+            {REVIEWS.map((r) => (
+              <figure key={r.who} className="flex flex-col border-t pt-5">
+                <blockquote className="flex-1 text-[0.95rem] leading-relaxed text-muted-foreground">
+                  «{r.text}»
+                </blockquote>
+                <figcaption className="mt-4 text-[0.62rem] tracking-[0.25em] uppercase text-primary">
+                  {r.who}
+                </figcaption>
+              </figure>
+            ))}
           </div>
         </div>
       </section>
 
       {/* Om Østgaard */}
-      <section id="om" className="scroll-mt-20 border-y bg-secondary/40">
-        <div className="mx-auto grid max-w-6xl gap-12 px-4 py-20 lg:grid-cols-[3fr_2fr]">
+      <section id="om" className="scroll-mt-20 border-y bg-secondary">
+        <div className="mx-auto grid max-w-6xl gap-10 px-5 py-16 lg:grid-cols-[3fr_2fr] lg:gap-16 lg:py-24">
           <div>
-            <Eyebrow>Familieeid siden 1700-tallet</Eyebrow>
-            <h2 className="mt-2 font-serif text-3xl font-medium sm:text-4xl">
-              Ønsker du en spesiell ramme for din neste feiring?
-            </h2>
-            <div className="mt-5 space-y-4 text-sm leading-relaxed text-muted-foreground sm:text-base">
+            <Eyebrow>Drevet av 7. generasjon</Eyebrow>
+            <h2 className={`mt-2.5 ${H2}`}>Feiring og sammenkomster siden 1636</h2>
+            <div className={`mt-4 space-y-4 ${LEAD}`}>
               <p>
-                Østgaard har i over 300 år vært stedet for feiring og hyggelige
+                Østgaard har siden 1636 vært stedet for feiring og hyggelige
                 sammenkomster, en stolt tradisjon vi viderefører med ekte
                 glede. I dag drives gården av 7. generasjon, ekteparet Nina og
                 Lars Garder, og de har med seg sine fire barn i driften.
-                Sammen skaper de et familieeid sted hvor både historie og
-                nyskaping lever side om side.
               </p>
               <p>
-                På Østgaard er mulighetene uendelige. Enten det gjelder
-                bryllup, jubileum, kurs og konferanser eller en annen stor
-                begivenhet, er vi her for å skape en opplevelse skreddersydd
-                for deg. Vi har vært vertskap for TV-innspillinger som{" "}
+                Vi har vært vertskap for TV-innspillinger som{" "}
                 <em>Gift ved første blikk</em> og andre store produksjoner, og
-                vi tar gjerne imot små og store feiringer med åpne armer. Fra
-                de mest intime samlingene til de store festene
-                tilrettelegger vi for alt du kan tenke deg, med en lidenskap for
-                kvalitet og detalj.
-              </p>
-              <p className="font-serif text-lg text-foreground">
-                Velkommen til oss på Østgaard
+                vi tar gjerne imot små og store feiringer med åpne armer.
               </p>
             </div>
-            <a
-              href="/visning"
-              className="mt-7 inline-flex items-center gap-2 border border-primary bg-primary px-6 py-3 text-xs tracking-[0.2em] uppercase text-primary-foreground transition-colors hover:bg-primary/90"
-            >
-              Book visning <ArrowRight className="size-3.5" />
-            </a>
           </div>
           {/* Verthistorien som tidslinje — seksjonens signatur */}
           <div className="border-l pl-8">
-            <ol className="space-y-10">
+            <ol className="space-y-8">
               {HISTORY.map((h) => (
                 <li key={h.when} className="relative">
                   <span
                     aria-hidden
                     className="absolute top-1.5 -left-[37px] size-2 rounded-full bg-primary"
                   />
-                  <p className="font-serif text-2xl">{h.when}</p>
-                  <p className="mt-1 text-sm leading-relaxed text-muted-foreground">
+                  <p className="font-serif text-xl">{h.when}</p>
+                  <p className="mt-1 text-[0.88rem] leading-relaxed text-muted-foreground">
                     {h.what}
                   </p>
                 </li>
@@ -291,36 +313,12 @@ export default async function LandingPage() {
         </div>
       </section>
 
-      {/* Omtaler */}
-      <section className="mx-auto max-w-6xl px-4 py-20">
-        <Eyebrow>Omtaler</Eyebrow>
-        <h2 className="mt-2 max-w-2xl font-serif text-3xl font-medium sm:text-4xl">
-          Mer enn 500 minnerike begivenheter
-        </h2>
-        <p className="mt-3 max-w-2xl text-sm leading-relaxed text-muted-foreground">
-          Vi er takknemlige for alle de flotte tilbakemeldingene vi har fått
-          fra gjestene våre, og her kan du lese noen av dem.
-        </p>
-        <div className="mt-10 grid gap-6 md:grid-cols-3">
-          {REVIEWS.map((r) => (
-            <figure key={r.who} className="flex flex-col border bg-card p-6">
-              <blockquote className="flex-1 text-sm leading-relaxed text-muted-foreground">
-                «{r.text}»
-              </blockquote>
-              <figcaption className="mt-4 font-serif text-sm tracking-[0.15em] uppercase">
-                {r.who}
-              </figcaption>
-            </figure>
-          ))}
-        </div>
-      </section>
-
       {/* Overnatting: hotellavtalen er det vi lover. Plassene på gården er ikke
           noe vi selger inn på nettsiden. */}
       <section id="overnatting" className="scroll-mt-20 border-t">
-        <div className="mx-auto max-w-6xl px-4 py-20">
+        <div className="mx-auto max-w-6xl px-5 py-16 lg:py-24">
           <Eyebrow>Overnatting</Eyebrow>
-          <h2 className="mt-2 max-w-2xl font-serif text-3xl font-medium sm:text-4xl">
+          <h2 className={`mt-2 max-w-2xl ${H2}`}>
             Hotell og transport for gjestene
           </h2>
           <p className="mt-3 max-w-2xl text-sm leading-relaxed text-muted-foreground">
@@ -338,9 +336,9 @@ export default async function LandingPage() {
 
       {/* Feiringer, selskap og bedrift. Bryllup er fokus, disse får en kort inngang. */}
       <section id="feiringer" className="scroll-mt-20 border-t">
-        <div id="bedrifter" className="mx-auto max-w-6xl scroll-mt-20 px-4 py-20">
+        <div id="bedrifter" className="mx-auto max-w-6xl scroll-mt-20 px-5 py-16 lg:py-24">
           <Eyebrow>Hele året på Østgaard</Eyebrow>
-          <h2 className="mt-2 max-w-2xl font-serif text-3xl font-medium sm:text-4xl">
+          <h2 className={`mt-2 max-w-2xl ${H2}`}>
             Det er ikke bare bryllup vi feirer
           </h2>
           <p className="mt-3 max-w-2xl text-sm leading-relaxed text-muted-foreground">
@@ -366,13 +364,13 @@ export default async function LandingPage() {
           <div className="mt-10 flex flex-wrap gap-3">
             <a
               href="/visning"
-              className="inline-flex items-center gap-2 border border-primary bg-primary px-6 py-3 text-xs tracking-[0.2em] uppercase text-primary-foreground transition-colors hover:bg-primary/90"
+              className={BTN}
             >
               Send oss en forespørsel <ArrowRight className="size-3.5" />
             </a>
             <a
               href="/visning?type=SOMMERFEST"
-              className="inline-flex items-center border border-primary px-6 py-3 text-xs tracking-[0.2em] uppercase text-primary transition-colors hover:bg-primary hover:text-primary-foreground"
+              className={BTN_LINE}
             >
               Spør om bedriftsarrangement
             </a>
@@ -381,10 +379,10 @@ export default async function LandingPage() {
       </section>
 
       {/* Kommende arrangementer — billetter kjøpes i dagens system */}
-      <section id="arrangementer" className="scroll-mt-20 border-y bg-secondary/40">
-        <div className="mx-auto max-w-6xl px-4 py-20">
+      <section id="arrangementer" className="scroll-mt-20 border-y bg-secondary">
+        <div className="mx-auto max-w-6xl px-5 py-16 lg:py-24">
           <Eyebrow>Kommende arrangementer</Eyebrow>
-          <h2 className="mt-2 font-serif text-3xl font-medium sm:text-4xl">
+          <h2 className={`mt-2 ${H2}`}>
             Det skjer på Østgaard
           </h2>
           {events.length > 0 ? (
@@ -423,7 +421,7 @@ export default async function LandingPage() {
       </section>
 
       {/* Også på Østgaard: korte innganger. Ankrene brukes av gamle adresser. */}
-      <section className="mx-auto grid max-w-6xl gap-6 px-4 py-20 md:grid-cols-2">
+      <section className="mx-auto grid max-w-6xl gap-6 px-5 py-16 md:grid-cols-2 lg:py-24">
         <div id="fru-ostgaard" className="scroll-mt-20 border bg-card">
           <div className="relative aspect-[16/10] overflow-hidden">
             <Image
@@ -436,7 +434,7 @@ export default async function LandingPage() {
           </div>
           <div className="p-8">
             <Eyebrow>Fru Østgaard</Eyebrow>
-            <h2 className="mt-2 font-serif text-2xl font-medium">Afternoon tea og gårdsbutikk</h2>
+            <h2 className="mt-2 font-serif text-[1.45rem] font-normal">Afternoon tea og gårdsbutikk</h2>
             <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
               Afternoon tea og egenproduserte varer fra gården og nærområdet.
               Grupper på 15 eller flere kan bestille afternoon tea på forhånd.
@@ -461,7 +459,7 @@ export default async function LandingPage() {
           </div>
           <div className="p-8">
             <Eyebrow>Utstillinger</Eyebrow>
-            <h2 className="mt-2 font-serif text-2xl font-medium">Lille Martine på Østgaard</h2>
+            <h2 className="mt-2 font-serif text-[1.45rem] font-normal">Lille Martine på Østgaard</h2>
             <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
               Flere ganger i året fylles Gildehallen med separatutstillinger, i
               samarbeid med Galleri Lille Martine.
@@ -477,34 +475,29 @@ export default async function LandingPage() {
       </section>
 
       {/* Avsluttende CTA */}
-      <section className="relative">
-        <div className="relative flex min-h-[46vh] items-center">
-          <Image
-            src="/images/landing/gildehallen-2.jpg"
-            alt="Gildehallen klar til fest"
-            fill
-            className="object-cover"
-            sizes="100vw"
-          />
-          <div className="absolute inset-0 bg-black/55" />
-          <div className="relative mx-auto max-w-3xl px-4 py-16 text-center text-white">
-            <h2 className="font-serif text-3xl font-medium sm:text-4xl">
-              Kom og se Østgaard med egne øyne
-            </h2>
-            <p className="mx-auto mt-3 max-w-xl text-sm leading-relaxed text-white/85">
-              Visningen er uforpliktende og kostnadsfri. Vi viser dere
-              lokalene, uteområdene og mulighetene for akkurat deres dag.
-            </p>
-            <a
-              href="/visning"
-              className="mt-7 inline-flex items-center gap-2 border border-white bg-white px-7 py-3 text-xs tracking-[0.2em] uppercase text-foreground transition-colors hover:bg-white/90"
-            >
-              Book visning <ArrowRight className="size-3.5" />
-            </a>
-          </div>
+      <section className="relative flex min-h-[64vh] items-center overflow-hidden text-cream">
+        <Image
+          src="/images/landing/gard-dam-lufta.jpg"
+          alt="Østgaard sett fra lufta, med dammen og hagene rundt gården"
+          fill
+          className="object-cover"
+          sizes="100vw"
+        />
+        <div aria-hidden className="absolute inset-0 bg-[hsl(80_14%_9%/0.55)]" />
+        <div className="relative mx-auto max-w-3xl px-5 py-16 text-center">
+          <h2 className={H2}>Kom og se Østgaard med egne øyne</h2>
+          <p className="mx-auto mt-3 max-w-xl text-[0.95rem] leading-relaxed text-cream/85">
+            Visningen er uforpliktende og kostnadsfri.
+          </p>
+          <a href="/visning" className={`mt-[22px] ${BTN}`}>
+            Book gratis visning
+          </a>
         </div>
       </section>
 
+      <p className="mx-auto max-w-6xl px-5 py-4 text-xs text-muted-foreground">
+        Foto: Birthe Havnes, Sara Kiserud og Æva Studio
+      </p>
     </main>
   );
 }
