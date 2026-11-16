@@ -3,7 +3,6 @@ import { SITE } from "@/lib/site";
 import { ArrowRight } from "lucide-react";
 import { HeroSlides } from "@/components/landing/hero-slides";
 import { occasionsForSeason, seasonBand } from "@/lib/landing/season";
-import { MENUS, PRICE_YEAR, kr } from "@/lib/priser";
 import { eventHref } from "@/lib/landing/arrangementer";
 import { formatEventDate, upcomingEvents } from "@/lib/wix-events";
 
@@ -224,34 +223,6 @@ export default async function LandingPage() {
         <a href="/bryllup" className={`mt-8 ${LINK}`}>
           Les mer om bryllup på Østgaard <ArrowRight className="size-3" />
         </a>
-      </section>
-
-      {/* Priser */}
-      <section className="border-t">
-        <div className="mx-auto grid max-w-6xl gap-8 px-5 py-16 lg:grid-cols-2 lg:gap-16 lg:py-24">
-          <div>
-            <Eyebrow>Priser {PRICE_YEAR}</Eyebrow>
-            <h2 className={`mt-2.5 ${H2}`}>Fra {kr(MENUS[0].price)} per person</h2>
-            <p className={`mt-3 ${LEAD}`}>
-              Kuvertprisen dekker lokale, middag, servering, oppdekking og egen digital
-              kjøreplan. Drikke kommer i tillegg.
-            </p>
-            <a href="/bryllup/pris" className={`mt-[22px] ${BTN_LINE}`}>
-              Se alle prisene
-            </a>
-          </div>
-          <div>
-            {MENUS.slice(0, 4).map((menu) => (
-              <div
-                key={menu.name}
-                className="flex items-baseline justify-between gap-4 border-b py-3 font-serif text-[1.12rem]"
-              >
-                <span>{menu.name}</span>
-                <span className="whitespace-nowrap">{kr(menu.price)}</span>
-              </div>
-            ))}
-          </div>
-        </div>
       </section>
 
       {/* Planen — tre steg fra visning til bryllupsdag */}

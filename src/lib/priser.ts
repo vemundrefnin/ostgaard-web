@@ -1,6 +1,6 @@
 /**
- * Bryllupsprisene, brukt av både prissiden og forsiden, så tallene aldri kan
- * spri fra hverandre.
+ * Bryllupsprisene på /bryllup/pris. Ligger i egen fil så de er lette å
+ * finne og oppdatere.
  *
  * Tallene står her med vilje, ikke hentet fra kjøreplan-appen: prisene varierer
  * per år, og det holder å oppdatere dem for hånd. Bytt tall og PRICE_YEAR samlet

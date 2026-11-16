@@ -107,7 +107,7 @@ Adresser lever i e-poster, bokmerker, QR-koder og Googles indeks.
 - Ikke pur rent hvitt eller rent svart. Fargene heter cream, parchment, ink,
   moss, brass og linen og ligger i `globals.css`. Markedssidene er mørke (`.mork`),
   infosidene lyse.
-- Menyprisene står i `src/lib/priser.ts` (vises både på forsiden og prissiden),
+- Menyprisene står i `src/lib/priser.ts` (vises på prissiden),
   tilleggene i `src/app/(marketing)/bryllup/pris/page.tsx`. Endrer du dem, sjekk
   at tallene stemmer med det kjøreplan-appen bruker.
 
