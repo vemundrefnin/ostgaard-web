@@ -36,7 +36,7 @@ const CARDS = [
   },
   {
     title: "Priser",
-    text: `Fra ${kr(MENUS[0].price)} per person, med lokalet inkludert.`,
+    text: "Åpne priser, med lokalet inkludert.",
     href: "/bryllup/pris",
     image: "/images/landing/servitor-alleen.jpg",
     alt: "Servitør fra Østgaard i alleen opp mot gården",
@@ -191,24 +191,33 @@ export default async function LandingPage() {
         <Eyebrow>Deres dag, deres rammer</Eyebrow>
         <h2 className={`mt-2.5 max-w-2xl ${H2}`}>Vielse, middag og fest på samme gård</h2>
         <p className={`mt-3 max-w-2xl ${LEAD}`}>
-          Vertskapet har ansvaret for det praktiske, så dere kan være sammen med gjestene.
+          Vertskapet har ansvaret for det praktiske, så dere kan senke skuldrene og være sammen med gjestene.
         </p>
-        <div className="mt-8 grid gap-8 md:grid-cols-3">
+        {/* Telefon: kompakt liste med små bilder, så alle tre ses på én skjerm.
+            PC: tre kort side om side. */}
+        <div className="mt-8 border-b md:grid md:grid-cols-3 md:gap-8 md:border-b-0">
           {CARDS.map((card) => (
-            <a key={card.title} href={card.href} className="group block">
-              <div className="relative aspect-[3/2] overflow-hidden">
+            <a
+              key={card.title}
+              href={card.href}
+              className="group grid grid-cols-[96px_1fr_auto] items-center gap-3.5 border-t py-3.5 md:block md:border-t-0 md:py-0"
+            >
+              <div className="relative aspect-square overflow-hidden md:aspect-[3/2]">
                 <Image
                   src={card.image}
                   alt={card.alt}
                   fill
                   className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
-                  sizes="(min-width: 768px) 33vw, 100vw"
+                  sizes="(min-width: 768px) 33vw, 96px"
                 />
               </div>
-              <h3 className="mt-3.5 font-serif text-[1.28rem] font-normal">{card.title}</h3>
-              <p className="mt-1 text-[0.88rem] leading-relaxed text-muted-foreground">
-                {card.text}
-              </p>
+              <div>
+                <h3 className="font-serif text-[1.28rem] font-normal md:mt-3.5">{card.title}</h3>
+                <p className="mt-1 text-[0.88rem] leading-relaxed text-muted-foreground">
+                  {card.text}
+                </p>
+              </div>
+              <ArrowRight aria-hidden className="size-4 text-primary md:hidden" />
             </a>
           ))}
         </div>
@@ -222,7 +231,7 @@ export default async function LandingPage() {
         <div className="mx-auto grid max-w-6xl gap-8 px-5 py-16 lg:grid-cols-2 lg:gap-16 lg:py-24">
           <div>
             <Eyebrow>Priser {PRICE_YEAR}</Eyebrow>
-            <h2 className={`mt-2.5 ${H2}`}>Åpne priser, med lokalet inkludert</h2>
+            <h2 className={`mt-2.5 ${H2}`}>Fra {kr(MENUS[0].price)} per person</h2>
             <p className={`mt-3 ${LEAD}`}>
               Kuvertprisen dekker lokale, middag, servering, oppdekking og egen digital
               kjøreplan. Drikke kommer i tillegg.
