@@ -22,7 +22,7 @@ export const NAV = [
   { label: "Lokaler", href: "/lokaler" },
   { label: "Utevielse", href: "/utevielse" },
   { label: "Om Østgaard", href: "/#om" },
-  { label: "Feiringer", href: "/#feiringer" },
+  { label: "Selskap og kurs", href: "/selskap" },
   { label: "Arrangementer", href: "/#arrangementer" },
   { label: "Kontakt", href: "/#kontakt" },
 ];

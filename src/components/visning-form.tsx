@@ -18,6 +18,9 @@ const TYPES = [
   { value: "SOMMERFEST", label: "Sommerfest eller firmafest" },
   { value: "JULEBORD", label: "Julebord" },
   { value: "MINNESTUND", label: "Minnestund" },
+  { value: "KURS_KONFERANSE", label: "Kurs og konferanse" },
+  { value: "SELSKAP", label: "Jubileum, bursdag eller selskap" },
+  { value: "ANNET", label: "Annet" },
 ];
 
 /** «Hvor hørte dere om oss?» Svaret går i notatet på henvendelsen. */
