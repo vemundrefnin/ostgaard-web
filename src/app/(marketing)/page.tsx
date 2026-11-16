@@ -4,6 +4,7 @@ import { ArrowRight } from "lucide-react";
 import { HeroSlides } from "@/components/landing/hero-slides";
 import { occasionsForSeason, seasonBand } from "@/lib/landing/season";
 import { MENUS, PRICE_YEAR, kr } from "@/lib/priser";
+import { eventHref } from "@/lib/landing/arrangementer";
 import { formatEventDate, upcomingEvents } from "@/lib/wix-events";
 
 /**
@@ -150,12 +151,35 @@ export default async function LandingPage() {
           i Google de månedene folk fortsatt søker (278 dagers ledetid). */}
       {band && (
         <aside className="border-b bg-secondary">
-          <div className="mx-auto flex max-w-6xl flex-wrap items-center gap-x-4 gap-y-1 px-5 py-3">
-            <span className="text-[0.62rem] tracking-[0.25em] uppercase text-primary">
+          <div className="mx-auto flex max-w-6xl flex-wrap items-center gap-x-4 gap-y-1.5 px-5 py-3.5">
+            <span className="text-[0.75rem] tracking-[0.25em] uppercase text-primary">
               {band.eyebrow}
             </span>
-            <p className="flex-1 basis-64 text-sm text-muted-foreground">{band.text}</p>
-            <a href={band.href} className={LINK}>
+            {band.text && (
+              <p className="flex-1 basis-64 pl-3 text-[0.72rem] leading-snug whitespace-pre-line text-muted-foreground">
+                {band.text}
+              </p>
+            )}
+            {band.tags && (
+              <ul className="flex basis-full flex-wrap gap-1.5 lg:flex-1 lg:basis-auto" aria-label={band.eyebrow}>
+                {band.tags.map((tag) => {
+                  const href = eventHref(tag);
+                  const cls = "block border px-2 py-[3px] text-[0.66rem] text-muted-foreground";
+                  return (
+                    <li key={tag}>
+                      {href ? (
+                        <a href={href} className={`${cls} transition-colors hover:border-primary hover:text-foreground`}>
+                          {tag}
+                        </a>
+                      ) : (
+                        <span className={cls}>{tag}</span>
+                      )}
+                    </li>
+                  );
+                })}
+              </ul>
+            )}
+            <a href={band.href} className={LINK} data-cta={`Sesongbånd: ${band.cta}`}>
               {band.cta} <ArrowRight className="size-3" />
             </a>
           </div>
@@ -362,16 +386,10 @@ export default async function LandingPage() {
             ))}
           </div>
           <div className="mt-10 flex flex-wrap gap-3">
-            <a
-              href="/visning"
-              className={BTN}
-            >
-              Send oss en forespørsel <ArrowRight className="size-3.5" />
+            <a href="/selskap" className={BTN}>
+              Les mer om arrangementene <ArrowRight className="size-3.5" />
             </a>
-            <a
-              href="/visning?type=SOMMERFEST"
-              className={BTN_LINE}
-            >
+            <a href="/visning?type=KURS_KONFERANSE" className={BTN_LINE}>
               Spør om bedriftsarrangement
             </a>
           </div>

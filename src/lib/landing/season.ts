@@ -85,7 +85,10 @@ const CALENDAR: Record<number, SeasonKey> = {
 
 export interface SeasonBand {
   eyebrow: string;
+  /** \n gir ny linje. Kan være tom når båndet bare viser stikkord. */
   text: string;
+  /** Små merkelapper under overskriften, for eksempel arrangementstyper. */
+  tags?: string[];
   cta: string;
   href: string;
 }
@@ -128,6 +131,50 @@ const BAND: Record<SeasonKey, (year: number) => SeasonBand> = {
   }),
 };
 
+/**
+ * Kampanjer i båndet, som går foran kalenderen mens de varer. `til` er første
+ * dag kampanjen IKKE gjelder, så båndet går tilbake til kalenderen av seg
+ * selv. Uten `til` varer kampanjen til den fjernes herfra. LANDING_SEASON
+ * overstyrer fortsatt alt.
+ */
+interface Campaign {
+  fra: string;
+  til?: string;
+  band: SeasonBand;
+}
+
+export const CAMPAIGNS: Campaign[] = [
+  {
+    // Viser at gården brukes til mer enn bryllup. Toppbildet og resten av
+    // forsiden handler fortsatt om bryllup. Stikkordene lenker til sin
+    // seksjon på /selskap (se src/lib/landing/arrangementer.ts).
+    fra: "2026-11-16",
+    band: {
+      eyebrow: "Vi arrangerer også",
+      text: "",
+      tags: [
+        "Kurs og konferanse",
+        "Sommerfest",
+        "Julebord",
+        "Jubileum",
+        "Konfirmasjon",
+        "Minnestund",
+        "Annet",
+      ],
+      cta: "Les mer her",
+      href: "/selskap",
+    },
+  },
+];
+
+const osloDate = (now: Date) =>
+  new Intl.DateTimeFormat("sv-SE", { timeZone: "Europe/Oslo" }).format(now);
+
+function activeCampaign(now: Date, campaigns: Campaign[]): Campaign | null {
+  const today = osloDate(now);
+  return campaigns.find((c) => c.fra <= today && (!c.til || today < c.til)) ?? null;
+}
+
 /** Sesongen akkurat nå, med LANDING_SEASON som overstyring. */
 export function currentSeason(now: Date = new Date()): SeasonKey | null {
   const override = process.env.LANDING_SEASON?.trim().toLowerCase();
@@ -137,7 +184,14 @@ export function currentSeason(now: Date = new Date()): SeasonKey | null {
 }
 
 /** Båndet som vises under heroen, eller null når det er slått av. */
-export function seasonBand(now: Date = new Date()): SeasonBand | null {
+export function seasonBand(
+  now: Date = new Date(),
+  campaigns: Campaign[] = CAMPAIGNS
+): SeasonBand | null {
+  if (!process.env.LANDING_SEASON?.trim()) {
+    const campaign = activeCampaign(now, campaigns);
+    if (campaign) return campaign.band;
+  }
   const season = currentSeason(now);
   if (!season) return null;
   return BAND[season](targetYear(season, now));

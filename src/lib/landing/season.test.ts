@@ -1,5 +1,6 @@
 import { describe, expect, it, afterEach } from "vitest";
 import {
+  CAMPAIGNS,
   currentSeason,
   occasionsForSeason,
   seasonBand,
@@ -42,16 +43,44 @@ describe("sesongkalenderen", () => {
 });
 
 describe("årstallet i båndet", () => {
+  // Uten kampanjer, så det er kalenderen som testes.
   it("gjelder inneværende desember når julebord selges om høsten", () => {
-    expect(seasonBand(at("2026-09-01"))?.eyebrow).toBe("Julebord 2026");
+    expect(seasonBand(at("2026-09-01"), [])?.eyebrow).toBe("Julebord 2026");
   });
 
   it("gjelder neste mai når konfirmasjon selges i desember", () => {
-    expect(seasonBand(at("2026-12-01"))?.eyebrow).toBe("Konfirmasjon 2027");
+    expect(seasonBand(at("2026-12-01"), [])?.eyebrow).toBe("Konfirmasjon 2027");
   });
 
   it("gjelder inneværende mai når konfirmasjon selges i januar", () => {
-    expect(seasonBand(at("2027-01-10"))?.eyebrow).toBe("Konfirmasjon 2027");
+    expect(seasonBand(at("2027-01-10"), [])?.eyebrow).toBe("Konfirmasjon 2027");
+  });
+});
+
+describe("kampanjer", () => {
+  it("viser «Vi arrangerer også» fra 16. november og fremover", () => {
+    expect(seasonBand(at("2026-11-16"))?.eyebrow).toBe("Vi arrangerer også");
+    expect(seasonBand(at("2027-06-15"))?.eyebrow).toBe("Vi arrangerer også");
+  });
+
+  it("bruker kalenderen før kampanjen starter", () => {
+    expect(seasonBand(at("2026-11-15"))?.eyebrow).toBe("Julebord 2026");
+  });
+
+  it("slutter av seg selv når den har en sluttdato", () => {
+    const kort = [{ fra: "2027-01-01", til: "2027-02-01", band: CAMPAIGNS[0].band }];
+    expect(seasonBand(at("2027-01-15"), kort)?.eyebrow).toBe("Vi arrangerer også");
+    expect(seasonBand(at("2027-02-01"), kort)?.eyebrow).toBe("Konfirmasjon 2027");
+  });
+
+  it("viser stikkordene, også minnestund og annet", () => {
+    expect(CAMPAIGNS[0].band.tags).toContain("Minnestund");
+    expect(CAMPAIGNS[0].band.tags).toContain("Annet");
+  });
+
+  it("viker for manuell overstyring", () => {
+    process.env.LANDING_SEASON = "julebord";
+    expect(seasonBand(at("2026-12-15"))?.eyebrow).toBe("Julebord 2026");
   });
 });
 

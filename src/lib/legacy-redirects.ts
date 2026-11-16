@@ -57,7 +57,7 @@ export const LEGACY_REDIRECTS: Redirect[] = [
   { source: "/gift-card", destination: "/#fru-ostgaard", permanent: true },
 
   // Bedrift
-  { source: "/for-bedrifter", destination: "/#bedrifter", permanent: true },
+  { source: "/for-bedrifter", destination: "/selskap#kurs", permanent: true },
 
   // Overnatting (egen underside kommer, inntil da: forsiden)
   { source: "/sov-p%C3%A5-%C3%B8stgaard", destination: "/", permanent: true },
@@ -66,7 +66,7 @@ export const LEGACY_REDIRECTS: Redirect[] = [
   { source: "/kopi-av-overnatting", destination: "/", permanent: true },
 
   // Feiringer og kontakt/booking
-  { source: "/livets-begivenheter", destination: "/#feiringer", permanent: true },
+  { source: "/livets-begivenheter", destination: "/selskap", permanent: true },
   { source: "/contact-10", destination: "/visning", permanent: true },
   { source: "/book-online", destination: "/#kontakt", permanent: true },
 

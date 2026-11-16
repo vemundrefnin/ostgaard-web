@@ -56,6 +56,8 @@ Den som redigerer er ofte ikke utvikler. Gjør det enkelt:
 | --- | --- |
 | Forsiden | `src/app/(marketing)/page.tsx` |
 | Bryllup, pris, intimt, utevielse, lokaler | `src/app/(marketing)/<sti>/page.tsx` |
+| Selskap, kurs og fest (alt utenom bryllup) | `src/app/(marketing)/selskap/page.tsx`, tekstene i `src/lib/landing/arrangementer.ts` og `season.ts` |
+| Båndet under toppbildet på forsiden | `CAMPAIGNS` i `src/lib/landing/season.ts` |
 | Topp og bunn på markedssidene | `src/app/(marketing)/layout.tsx` |
 | Infosider til leverandører (DJ, fotograf, utstyr) | `src/app/info/<sti>/page.tsx` |
 | Bilder og video | `public/images/landing/` og `public/images/info/` |

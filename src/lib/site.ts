@@ -107,6 +107,15 @@ export const PAGES: SitePage[] = [
     section: "Hovedsider",
   },
   {
+    path: "/selskap",
+    title: "Selskap, kurs og fest på Østgaard",
+    description:
+      "Kurs og konferanse, sommerfest, julebord, jubileum, konfirmasjon og minnestund. Samme vertskap, lokaler og kjøkken som i bryllupene.",
+    changeFrequency: "monthly",
+    priority: 0.7,
+    section: "Hovedsider",
+  },
+  {
     path: "/bryllup",
     title: "Bryllup på Østgaard",
     description:
