@@ -66,20 +66,11 @@ const REVIEWS = [
   },
 ];
 
-/** Tre steg fra første besøk til bryllupsdag — planen gjester møter oss med. */
+/** Tre steg fra første besøk til bryllupsdag, vist som tidslinje. */
 const PLAN = [
-  {
-    title: "Book en visning",
-    text: "Vi møter dere på gården og viser lokalene og uteområdene. Uforpliktende og kostnadsfritt.",
-  },
-  {
-    title: "Planlegg alt på ett sted",
-    text: "Meny, gjesteliste, bordplan og tidsplan samles i deres egen digitale kjøreplan.",
-  },
-  {
-    title: "Nyt dagen",
-    text: "Vertskapet styrer resten. Dere har én jobb: å være til stede i egen fest.",
-  },
+  { title: "Book en visning", text: "Kom og se gården. Gratis og uforpliktende." },
+  { title: "Planlegg alt på ett sted", text: "Meny, gjester og bordplan i deres egen kjøreplan." },
+  { title: "Nyt dagen", text: "Vertskapet styrer resten, dere kan bare være til stede." },
 ];
 
 /** Verthistorien — signaturelementet i om-seksjonen. */
@@ -227,32 +218,31 @@ export default async function LandingPage() {
 
       {/* Planen — tre steg fra visning til bryllupsdag */}
       <section id="plan" className="scroll-mt-20 border-t">
-        <div className="mx-auto grid max-w-6xl items-center gap-10 px-5 py-16 lg:grid-cols-2 lg:gap-16 lg:py-24">
+        <div className="mx-auto grid max-w-6xl gap-8 px-5 py-16 lg:grid-cols-[2fr_3fr] lg:gap-16 lg:py-24">
           <div>
             <Eyebrow>Slik fungerer det</Eyebrow>
             <h2 className={`mt-2.5 ${H2}`}>Dere skal ikke være prosjektledere på egen bryllupsdag</h2>
-            <ol className="mt-8 space-y-6">
+          </div>
+          <div>
+            <ol className="grid gap-6 border-l border-primary/45 pl-6">
               {PLAN.map((step, i) => (
-                <li key={step.title} className="flex gap-5">
-                  <span className="font-serif text-2xl text-primary">{i + 1}</span>
-                  <div>
-                    <h3 className="font-serif text-[1.28rem] font-normal">{step.title}</h3>
-                    <p className="mt-1 text-[0.88rem] leading-relaxed text-muted-foreground">
-                      {step.text}
-                    </p>
-                  </div>
+                <li key={step.title} className="relative">
+                  <span
+                    aria-hidden
+                    className="absolute top-[7px] -left-[29px] size-[9px] rounded-full bg-primary"
+                  />
+                  <p className="text-[0.6rem] tracking-[0.25em] uppercase text-primary">Steg {i + 1}</p>
+                  <h3 className="mt-1 font-serif text-[1.28rem] font-normal">{step.title}</h3>
+                  <p className="mt-1 text-[0.88rem] leading-relaxed text-muted-foreground">{step.text}</p>
                 </li>
               ))}
             </ol>
-          </div>
-          <div className="relative aspect-[4/5] overflow-hidden">
-            <Image
-              src="/images/landing/brudepar-rygg.jpg"
-              alt="Brudepar hånd i hånd gjennom hagen, bruden ser seg tilbake"
-              fill
-              className="object-cover"
-              sizes="(min-width: 1024px) 50vw, 100vw"
-            />
+            {/* På telefon står samme knapp alltid i bunnlinjen. */}
+            <div className="mt-8 hidden sm:block">
+              <a href="/visning" className={BTN} data-cta="Forside: slik fungerer det">
+                Book gratis visning
+              </a>
+            </div>
           </div>
         </div>
       </section>
