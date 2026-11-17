@@ -85,7 +85,7 @@ Adresser lever i e-poster, bokmerker, QR-koder og Googles indeks.
 - Flytt eller døp aldri om en side uten å legge til en permanent redirect
   fra gammel til ny sti i `src/lib/legacy-redirects.ts`.
 - Rader i `legacy-redirects.ts` slettes aldri. Mål oppgraderes når en bedre
-  side finnes (overnatting peker på forsiden til `/overnatting` er bygget).
+  side finnes (overnatting peker på `/bryllup` til `/overnatting` eventuelt bygges).
 - Før domenebytte: `npm run check:redirects -- https://<preview-url>` skal gi
   grønt på alle stier.
 - Kilder med æøå må stå URL-enkodet i redirect-kartet.

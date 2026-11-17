@@ -109,19 +109,19 @@ const BAND: Record<SeasonKey, (year: number) => SeasonBand> = {
     eyebrow: `Julebord ${y}`,
     text: "Gildehallen med lysslynger, tregangers og plass til hele avdelingen. Desemberlørdagene går først.",
     cta: "Book julebord",
-    href: "#feiringer",
+    href: "/selskap#julebord",
   }),
   konfirmasjon: (y) => ({
     eyebrow: `Konfirmasjon ${y}`,
     text: "Egen sal til familien, meny etter ønske og uteområde til fotografering. Mai-helgene fylles tidlig.",
     cta: "Se mulighetene",
-    href: "#feiringer",
+    href: "/selskap#konfirmasjon",
   }),
   sommerfest: (y) => ({
     eyebrow: `Sommerfest ${y}`,
     text: "Grill og lange bord i hagen, eller vikingfest i Gildehallen. Fem minutter fra E6.",
     cta: "Planlegg sommerfesten",
-    href: "#feiringer",
+    href: "/selskap#sommerfest",
   }),
   bryllup: () => ({
     eyebrow: "Bryllupssesong",
