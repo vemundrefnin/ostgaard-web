@@ -10,6 +10,8 @@ export interface Review {
   quote: string;
   img: string;
   alt: string;
+  /** Hvilken del av bildet som skal vises når det beskjæres, for eksempel "50% 30%". */
+  position?: string;
 }
 
 /**
@@ -43,6 +45,7 @@ export function Reviews({ reviews }: { reviews: Review[] }) {
           aria-hidden={i !== active}
           fill
           sizes="100vw"
+          style={{ objectPosition: r.position ?? "50% 50%" }}
           className={`object-cover transition-opacity duration-700 ${i === active ? "opacity-100" : "opacity-0"}`}
         />
       ))}

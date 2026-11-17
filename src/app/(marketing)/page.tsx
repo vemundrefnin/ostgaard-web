@@ -57,20 +57,21 @@ const REVIEWS: Review[] = [
   {
     who: "Sandra og Kasper",
     quote: "Vi kunne nyte dagen fullt ut takket være den varme og profesjonelle oppfølgingen.",
-    img: "/images/landing/brudepar-rygg.jpg",
-    alt: "Brudepar hånd i hånd gjennom hagen, bruden ser seg tilbake",
+    img: "/images/landing/brudepar-omfavnelse.jpg",
+    alt: "Brudepar som holder rundt hverandre med pannene mot hverandre, bruden med bukett",
+    position: "50% 28%",
   },
   {
     who: "Ina og Ole-Preben",
     quote: "Servicen var enestående, og gjestene skrøt av den fantastiske lokasjonen.",
-    img: "/images/landing/paviljong-sommer.jpg",
-    alt: "Paviljongen ved dammen en sommerdag",
+    img: "/images/landing/skal-champagne.jpg",
+    alt: "Bruden og venninnene skåler i champagne, bruden holder skoene sine",
   },
   {
     who: "Rut og Frode",
     quote: "The venue and staff exceeded all expectations.",
-    img: "/images/landing/lavetoppen-lysekroner.jpg",
-    alt: "Lysekroner og draperier i taket i Låvetoppen under festen",
+    img: "/images/landing/brud-ender-hage.jpg",
+    alt: "Brud med langt slør går over plenen i hagen, med to ender i gresset",
   },
 ];
 
