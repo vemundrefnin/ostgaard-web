@@ -57,9 +57,9 @@ const REVIEWS: Review[] = [
   {
     who: "Sandra og Kasper",
     quote: "Vi kunne nyte dagen fullt ut takket være den varme og profesjonelle oppfølgingen.",
-    img: "/images/landing/brudepar-omfavnelse.jpg",
-    alt: "Brudepar som holder rundt hverandre med pannene mot hverandre, bruden med bukett",
-    position: "50% 28%",
+    img: "/images/landing/brudepar-loft.jpg",
+    alt: "Brudgommen løfter bruden under trærne i hagen, hun holder buketten",
+    position: "50% 42%",
   },
   {
     who: "Ina og Ole-Preben",
