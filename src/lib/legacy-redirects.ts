@@ -59,11 +59,12 @@ export const LEGACY_REDIRECTS: Redirect[] = [
   // Bedrift
   { source: "/for-bedrifter", destination: "/selskap#kurs", permanent: true },
 
-  // Overnatting (egen underside kommer, inntil da: forsiden)
-  { source: "/sov-p%C3%A5-%C3%B8stgaard", destination: "/", permanent: true },
-  { source: "/kopi-av-sov-p%C3%A5-%C3%B8stgaard", destination: "/", permanent: true },
-  { source: "/kopi-av-sov-p%C3%A5-%C3%B8stgaard-1", destination: "/", permanent: true },
-  { source: "/kopi-av-overnatting", destination: "/", permanent: true },
+  // Overnatting. Gården har ikke overnatting selv; hotellavtalen står på
+  // /bryllup («Gjør det til en helg»). Oppgraderes hvis /overnatting bygges.
+  { source: "/sov-p%C3%A5-%C3%B8stgaard", destination: "/bryllup", permanent: true },
+  { source: "/kopi-av-sov-p%C3%A5-%C3%B8stgaard", destination: "/bryllup", permanent: true },
+  { source: "/kopi-av-sov-p%C3%A5-%C3%B8stgaard-1", destination: "/bryllup", permanent: true },
+  { source: "/kopi-av-overnatting", destination: "/bryllup", permanent: true },
 
   // Feiringer og kontakt/booking
   { source: "/livets-begivenheter", destination: "/selskap", permanent: true },

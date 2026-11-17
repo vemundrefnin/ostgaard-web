@@ -3,7 +3,7 @@ import { SITE } from "@/lib/site";
 import { ArrowRight } from "lucide-react";
 import { HeroSlides } from "@/components/landing/hero-slides";
 import { Reviews, type Review } from "@/components/landing/reviews";
-import { occasionsForSeason, seasonBand } from "@/lib/landing/season";
+import { seasonBand } from "@/lib/landing/season";
 import { eventHref } from "@/lib/landing/arrangementer";
 import { formatEventDate, upcomingEvents } from "@/lib/wix-events";
 
@@ -48,8 +48,6 @@ const H2 = "font-serif text-[clamp(1.55rem,1.1rem+2.2vw,3.1rem)] leading-[1.14] 
 const LEAD = "text-[0.95rem] leading-relaxed text-muted-foreground lg:text-[1.05rem]";
 const BTN =
   "inline-flex min-h-[46px] items-center justify-center gap-2 border border-primary bg-primary px-[22px] text-[0.66rem] tracking-[0.22em] uppercase text-primary-foreground transition-colors hover:bg-primary/85";
-const BTN_LINE =
-  "inline-flex min-h-[46px] items-center justify-center border border-foreground/45 px-[22px] text-[0.66rem] tracking-[0.22em] uppercase text-foreground transition-colors hover:bg-foreground/10";
 const LINK = "inline-flex items-center gap-1.5 text-[0.66rem] tracking-[0.2em] uppercase text-primary hover:underline";
 
 /** Ett kort sitat fra hver omtale, hentet ordrett, med et eget bilde bak. */
@@ -101,7 +99,6 @@ export default async function LandingPage() {
   // Fra Wix Events (eller src/content/events.json uten API-nøkkel).
   const events = await upcomingEvents(4);
   const band = seasonBand();
-  const occasions = occasionsForSeason();
 
   return (
     <main className="text-[15px] leading-[1.62] lg:text-base">
@@ -279,65 +276,6 @@ export default async function LandingPage() {
           <a href="/om-oss" className={`mt-6 ${LINK}`}>
             Les historien vår <ArrowRight className="size-3" />
           </a>
-        </div>
-      </section>
-
-      {/* Overnatting: hotellavtalen er det vi lover. Plassene på gården er ikke
-          noe vi selger inn på nettsiden. */}
-      <section id="overnatting" className="scroll-mt-20 border-t">
-        <div className="mx-auto max-w-6xl px-5 py-16 lg:py-24">
-          <Eyebrow>Overnatting</Eyebrow>
-          <h2 className={`mt-2 max-w-2xl ${H2}`}>
-            Hotell og transport for gjestene
-          </h2>
-          <p className="mt-3 max-w-2xl text-sm leading-relaxed text-muted-foreground">
-            Vi har avtale med Home Hotel Park i Halden, fem minutter unna, og
-            hjelper dere med booking og transport begge veier.
-          </p>
-          <a
-            href="/visning"
-            className="mt-5 inline-flex items-center gap-1.5 text-xs tracking-[0.18em] uppercase text-primary hover:underline"
-          >
-            Spør om overnatting <ArrowRight className="size-3" />
-          </a>
-        </div>
-      </section>
-
-      {/* Feiringer, selskap og bedrift. Bryllup er fokus, disse får en kort inngang. */}
-      <section id="feiringer" className="scroll-mt-20 border-t">
-        <div id="bedrifter" className="mx-auto max-w-6xl scroll-mt-20 px-5 py-16 lg:py-24">
-          <Eyebrow>Hele året på Østgaard</Eyebrow>
-          <h2 className={`mt-2 max-w-2xl ${H2}`}>
-            Det er ikke bare bryllup vi feirer
-          </h2>
-          <p className="mt-3 max-w-2xl text-sm leading-relaxed text-muted-foreground">
-            Konfirmasjoner om våren, sommerfester i hagen, julebord i
-            Gildehallen og kurs og konferanser gjennom hele året, med samme
-            vertskap, samme lokaler og samme mat.
-          </p>
-          <div className="mt-10 grid gap-x-8 gap-y-9 sm:grid-cols-2 lg:grid-cols-3">
-            {occasions.map((o) => (
-              <div key={o.title} className="border-t pt-5">
-                <h3 className="font-serif text-xl">{o.title}</h3>
-                {o.season && (
-                  <p className="mt-1 text-xs tracking-[0.15em] uppercase text-primary">
-                    {o.season}
-                  </p>
-                )}
-                <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-                  {o.text}
-                </p>
-              </div>
-            ))}
-          </div>
-          <div className="mt-10 flex flex-wrap gap-3">
-            <a href="/selskap" className={BTN}>
-              Les mer om arrangementene <ArrowRight className="size-3.5" />
-            </a>
-            <a href="/visning?type=KURS_KONFERANSE" className={BTN_LINE}>
-              Spør om bedriftsarrangement
-            </a>
-          </div>
         </div>
       </section>
 
