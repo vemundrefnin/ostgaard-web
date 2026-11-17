@@ -107,6 +107,15 @@ export const PAGES: SitePage[] = [
     section: "Hovedsider",
   },
   {
+    path: "/om-oss",
+    title: "Om Østgaard",
+    description:
+      "Feiring og sammenkomster siden 1636. I dag drives gården av 7. generasjon, Nina og Lars Garder, sammen med sine fire barn.",
+    changeFrequency: "yearly",
+    priority: 0.5,
+    section: "Hovedsider",
+  },
+  {
     path: "/selskap",
     title: "Selskap, kurs og fest på Østgaard",
     description:

@@ -21,7 +21,7 @@ export const NAV = [
   { label: "Priser", href: "/bryllup/pris" },
   { label: "Lokaler", href: "/lokaler" },
   { label: "Utevielse", href: "/utevielse" },
-  { label: "Om Østgaard", href: "/#om" },
+  { label: "Om Østgaard", href: "/om-oss" },
   { label: "Selskap og kurs", href: "/selskap" },
   { label: "Arrangementer", href: "/#arrangementer" },
   { label: "Kontakt", href: "/#kontakt" },

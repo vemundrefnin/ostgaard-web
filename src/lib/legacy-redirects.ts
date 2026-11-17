@@ -34,9 +34,9 @@ export const LEGACY_REDIRECTS: Redirect[] = [
   { source: "/kopi-av-lokaler-1", destination: "/lokaler", permanent: true },
   { source: "/utevielse", destination: "/utevielse", permanent: true },
 
-  // Om gården
-  { source: "/om-oss", destination: "/#om", permanent: true },
-  { source: "/general-clean", destination: "/#om", permanent: true },
+  // Om gården. /om-oss er nå en ekte side på samme sti.
+  { source: "/om-oss", destination: "/om-oss", permanent: true },
+  { source: "/general-clean", destination: "/om-oss", permanent: true },
 
   // Utstillinger (about-1 var «VELKOMMEN TIL EKSKLUSIVE UTSTILLINGER»-målet)
   { source: "/about-1", destination: "/#utstillinger", permanent: true },

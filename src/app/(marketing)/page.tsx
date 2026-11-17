@@ -82,11 +82,11 @@ const PLAN = [
   { title: "Nyt dagen", text: "Vertskapet styrer resten, dere kan bare være til stede." },
 ];
 
-/** Verthistorien — signaturelementet i om-seksjonen. */
-const HISTORY = [
-  { when: "1636", what: "Lokalene bygges, og Østgaard blir stedet for feiring og sammenkomster" },
-  { when: "I dag", what: "7. generasjon: Nina og Lars Garder driver gården med sine fire barn" },
-  { when: "500+", what: "minnerike begivenheter: bryllup, jubileer, kurs og konferanser" },
+/** Tallene i om-delen på forsiden. Hele historien står på /om-oss. */
+const FACTS = [
+  { value: "1636", label: "Feiret her siden" },
+  { value: "7.", label: "generasjon vertskap" },
+  { value: "500+", label: "bryllup og feiringer" },
 ];
 
 function Eyebrow({ children }: { children: React.ReactNode }) {
@@ -259,43 +259,26 @@ export default async function LandingPage() {
       {/* Omtaler */}
       <Reviews reviews={REVIEWS} />
 
-      {/* Om Østgaard */}
+      {/* Om Østgaard: kort på forsiden, hele historien står på /om-oss */}
       <section id="om" className="scroll-mt-20 border-y bg-secondary">
-        <div className="mx-auto grid max-w-6xl gap-10 px-5 py-16 lg:grid-cols-[3fr_2fr] lg:gap-16 lg:py-24">
-          <div>
-            <Eyebrow>Drevet av 7. generasjon</Eyebrow>
-            <h2 className={`mt-2.5 ${H2}`}>Feiring og sammenkomster siden 1636</h2>
-            <div className={`mt-4 space-y-4 ${LEAD}`}>
-              <p>
-                Østgaard har siden 1636 vært stedet for feiring og hyggelige
-                sammenkomster, en stolt tradisjon vi viderefører med ekte
-                glede. I dag drives gården av 7. generasjon, ekteparet Nina og
-                Lars Garder, og de har med seg sine fire barn i driften.
-              </p>
-              <p>
-                Vi har vært vertskap for TV-innspillinger som{" "}
-                <em>Gift ved første blikk</em> og andre store produksjoner, og
-                vi tar gjerne imot små og store feiringer med åpne armer.
-              </p>
-            </div>
-          </div>
-          {/* Verthistorien som tidslinje — seksjonens signatur */}
-          <div className="border-l pl-8">
-            <ol className="space-y-8">
-              {HISTORY.map((h) => (
-                <li key={h.when} className="relative">
-                  <span
-                    aria-hidden
-                    className="absolute top-1.5 -left-[37px] size-2 rounded-full bg-primary"
-                  />
-                  <p className="font-serif text-xl">{h.when}</p>
-                  <p className="mt-1 text-[0.88rem] leading-relaxed text-muted-foreground">
-                    {h.what}
-                  </p>
-                </li>
-              ))}
-            </ol>
-          </div>
+        <div className="mx-auto max-w-6xl px-5 py-14 lg:py-20">
+          <Eyebrow>Om Østgaard</Eyebrow>
+          <h2 className={`mt-2.5 ${H2}`}>Feiring og sammenkomster siden 1636</h2>
+          <dl className="mt-6 grid grid-cols-3 border-y lg:mt-8">
+            {FACTS.map((f, i) => (
+              <div key={f.value} className={`flex flex-col-reverse px-1 py-5 text-center lg:py-8 ${i > 0 ? "border-l" : ""}`}>
+                <dt className="mt-2 text-[0.62rem] leading-snug tracking-[0.14em] uppercase text-muted-foreground lg:text-[0.7rem]">
+                  {f.label}
+                </dt>
+                <dd className="font-serif text-[clamp(1.9rem,1.4rem+2.4vw,3.4rem)] leading-none text-primary">
+                  {f.value}
+                </dd>
+              </div>
+            ))}
+          </dl>
+          <a href="/om-oss" className={`mt-6 ${LINK}`}>
+            Les historien vår <ArrowRight className="size-3" />
+          </a>
         </div>
       </section>
 
