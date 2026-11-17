@@ -2,6 +2,7 @@ import Image from "next/image";
 import { SITE } from "@/lib/site";
 import { ArrowRight } from "lucide-react";
 import { HeroSlides } from "@/components/landing/hero-slides";
+import { Reviews, type Review } from "@/components/landing/reviews";
 import { occasionsForSeason, seasonBand } from "@/lib/landing/season";
 import { eventHref } from "@/lib/landing/arrangementer";
 import { formatEventDate, upcomingEvents } from "@/lib/wix-events";
@@ -51,18 +52,25 @@ const BTN_LINE =
   "inline-flex min-h-[46px] items-center justify-center border border-foreground/45 px-[22px] text-[0.66rem] tracking-[0.22em] uppercase text-foreground transition-colors hover:bg-foreground/10";
 const LINK = "inline-flex items-center gap-1.5 text-[0.66rem] tracking-[0.2em] uppercase text-primary hover:underline";
 
-const REVIEWS = [
+/** Ett kort sitat fra hver omtale, hentet ordrett, med et eget bilde bak. */
+const REVIEWS: Review[] = [
   {
     who: "Sandra og Kasper",
-    text: "Vi feiret bryllupet vårt på Østgaard sommeren 2024, og det var en drøm! Vertskapet sørget for at alt var perfekt planlagt, lokalene var nydelig pyntet, maten fantastisk, og atmosfæren magisk. Vi kunne nyte dagen fullt ut takket være den varme og profesjonelle oppfølgingen. Perfekt sted for vårt bryllup!",
+    quote: "Vi kunne nyte dagen fullt ut takket være den varme og profesjonelle oppfølgingen.",
+    img: "/images/landing/brudepar-rygg.jpg",
+    alt: "Brudepar hånd i hånd gjennom hagen, bruden ser seg tilbake",
   },
   {
     who: "Ina og Ole-Preben",
-    text: "Vi feiret vårt livs største dag på Østgaard med en vakker utevielse ved dammen, kakeskjæring og champagne. Servicen var enestående, og gjestene skrøt av den fantastiske lokasjonen. Østgaard ga oss en perfekt ramme for dagen vår. Vi kunne ikke vært mer fornøyde!",
+    quote: "Servicen var enestående, og gjestene skrøt av den fantastiske lokasjonen.",
+    img: "/images/landing/paviljong-sommer.jpg",
+    alt: "Paviljongen ved dammen en sommerdag",
   },
   {
     who: "Rut og Frode",
-    text: "Our wedding at Østgaard was absolutely wonderful! The team answered all my questions and supported me every step of the way. The venue and staff exceeded all expectations. I highly recommend it. Thank you for everything!",
+    quote: "The venue and staff exceeded all expectations.",
+    img: "/images/landing/lavetoppen-lysekroner.jpg",
+    alt: "Lysekroner og draperier i taket i Låvetoppen under festen",
   },
 ];
 
@@ -248,24 +256,7 @@ export default async function LandingPage() {
       </section>
 
       {/* Omtaler */}
-      <section className="border-t">
-        <div className="mx-auto max-w-6xl px-5 py-16 lg:py-24">
-          <Eyebrow>Fra parene våre</Eyebrow>
-          <h2 className={`mt-2.5 max-w-2xl ${H2}`}>Mer enn 500 minnerike begivenheter</h2>
-          <div className="mt-8 grid gap-8 md:grid-cols-3">
-            {REVIEWS.map((r) => (
-              <figure key={r.who} className="flex flex-col border-t pt-5">
-                <blockquote className="flex-1 text-[0.95rem] leading-relaxed text-muted-foreground">
-                  «{r.text}»
-                </blockquote>
-                <figcaption className="mt-4 text-[0.62rem] tracking-[0.25em] uppercase text-primary">
-                  {r.who}
-                </figcaption>
-              </figure>
-            ))}
-          </div>
-        </div>
-      </section>
+      <Reviews reviews={REVIEWS} />
 
       {/* Om Østgaard */}
       <section id="om" className="scroll-mt-20 border-y bg-secondary">
