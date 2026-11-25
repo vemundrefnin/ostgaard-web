@@ -59,8 +59,8 @@ export default function PrisPage() {
         vi opp et konkret forslag for akkurat deres dag, også med drikke.
       </p>
 
-      {/* Menyene */}
-      <section className="mt-14 grid gap-10 border-t pt-12 lg:grid-cols-[3fr_2fr]">
+      {/* Menyene. Ankeret #meny brukes av «Mat og drikke» på /bryllup. */}
+      <section id="meny" className="mt-14 grid scroll-mt-20 gap-10 border-t pt-12 lg:grid-cols-[3fr_2fr]">
         <div>
           <h2 className="font-serif text-3xl font-medium">Kuvertpris per voksen gjest</h2>
           <ul className="mt-7 divide-y border-y">
