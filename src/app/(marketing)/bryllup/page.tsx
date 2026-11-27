@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import { MENUS, kr } from "@/lib/priser";
+import { PACKAGE } from "@/lib/bryllupspakke";
 import Link from "next/link";
 import { ArrowRight, ChevronDown } from "lucide-react";
 
@@ -74,26 +75,6 @@ const FACTS = [
   { value: kr(FROM_PRICE).replace(" kr", ""), label: "kr per person, fra" },
 ];
 
-/** Det som er med i kuvertprisen. Sjekk mot prislisten når prisene endres. */
-const PACKAGE = [
-  // Rekkefølgen er valgt med vilje. Spør før den endres.
-  "Tre retters middag",
-  "Hovmester og servitører",
-  "Egen digital kjøreplan",
-  "Tilgang til lokalet dagen før, til pynting",
-  "Bryllupsplanlegging, opptil 5 timer med vår bryllupskoordinator",
-  "Oppdekking av runde eller avlange bord, med hvite tøyservietter, stivede hvite linduker og servise",
-  "Eget privat, møblert hageområde",
-  "Dansegulv etter middagen",
-  "Hageleker og utstyr til utlån",
-  "Høyttaler, mikrofon og myggmikrofon",
-  "Bemannet bar",
-  "Rydding og vask dagen etter",
-  "Gratis parkering",
-  "Vår liste over anbefalte og eksklusive leverandører",
-  "Mulighet for prøvesmaking",
-  "Mulighet for opplegg over flere dager",
-]
 
 /** Tillegg som kan bestilles i tillegg til pakken. Vises i en nedtrekksliste under pakken. */
 const ADDONS = [
